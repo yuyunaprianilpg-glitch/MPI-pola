@@ -1,0 +1,2970 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Petualangan Pola Ceria - Matematika Kelas 2 SD</title>
+  <style>
+    /* =====================================================================
+       1. VARIABEL WARNA & RESET DASAR RAMAH ANAK
+    ===================================================================== */
+    :root {
+      --sky: #38BDF8;
+      --sky-dark: #0284C7;
+      --sky-light: #E0F2FE;
+      --yellow: #FACC15;
+      --yellow-dark: #CA8A04;
+      --yellow-light: #FEF9C3;
+      --green: #4ADE80;
+      --green-dark: #16A34A;
+      --green-light: #DCFCE7;
+      --orange: #FB923C;
+      --orange-dark: #EA580C;
+      --orange-light: #FFEDD5;
+      --purple: #C084FC;
+      --purple-dark: #9333EA;
+      --purple-light: #F3E8FF;
+      --pink: #F472B6;
+      --red: #F87171;
+      --red-dark: #DC2626;
+      --bg-main: #F0F9FF;
+      --text-main: #1E293B;
+      --text-muted: #475569;
+      --white: #FFFFFF;
+      --shadow-card: 0 10px 25px -5px rgba(14, 116, 144, 0.14), 0 8px 10px -6px rgba(14, 116, 144, 0.08);
+      --shadow-btn: 0 5px 0 rgba(0, 0, 0, 0.18);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Nunito', 'Quicksand', 'Comic Sans MS', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(180deg, #BAE6FD 0%, #E0F2FE 40%, #FEFCE8 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    /* =====================================================================
+       2. LATAR BELAKANG CERIA DENGAN BENTUK GEOMETRI MELAYANG
+    ===================================================================== */
+    .bg-decorations {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .floating-shape {
+      position: absolute;
+      opacity: 0.25;
+      animation: floatSlow 8s ease-in-out infinite;
+    }
+
+    .floating-shape:nth-child(2) { animation-duration: 11s; animation-delay: 1s; }
+    .floating-shape:nth-child(3) { animation-duration: 9s; animation-delay: 2s; }
+    .floating-shape:nth-child(4) { animation-duration: 12s; animation-delay: 0.5s; }
+    .floating-shape:nth-child(5) { animation-duration: 10s; animation-delay: 3s; }
+    .floating-shape:nth-child(6) { animation-duration: 13s; animation-delay: 1.5s; }
+
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-22px) rotate(12deg); }
+    }
+
+    @keyframes bouncePop {
+      0% { transform: scale(0.85); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes shakeGentle {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-6px); }
+      80% { transform: translateX(6px); }
+    }
+
+    @keyframes pulseHighlight {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.7); }
+      50% { transform: scale(1.12); box-shadow: 0 0 0 14px rgba(250, 204, 21, 0); }
+    }
+
+    @keyframes pulseBeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.18); }
+    }
+
+    .anim-pop { animation: bouncePop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    .anim-shake { animation: shakeGentle 0.45s ease-in-out; }
+    .anim-highlight { animation: pulseHighlight 0.75s ease-in-out; border-color: var(--orange) !important; background: var(--yellow-light) !important; }
+
+    /* =====================================================================
+       3. HEADER / TOPBAR NAVIGASI TETAP
+    ===================================================================== */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(10px);
+      border-bottom: 4px solid var(--sky);
+      padding: 10px 18px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      box-shadow: 0 4px 15px rgba(2, 132, 199, 0.12);
+    }
+
+    .topbar-left, .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .brand-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--sky), #60A5FA);
+      color: var(--white);
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 1.05rem;
+      letter-spacing: 0.3px;
+      box-shadow: 0 3px 0 var(--sky-dark);
+      cursor: pointer;
+    }
+
+    .stat-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--yellow-light);
+      border: 3px solid var(--yellow);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: #854D0E;
+    }
+
+    .progress-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--green-light);
+      border: 3px solid var(--green);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 0.92rem;
+      color: #166534;
+    }
+
+    .progress-mini-bar {
+      width: 70px;
+      height: 12px;
+      background: #BBF7D0;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid #4ADE80;
+    }
+
+    .progress-mini-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #22C55E, #16A34A);
+      transition: width 0.4s ease;
+    }
+
+    /* =====================================================================
+       4. TOMBOL BESAR RAMAH ANAK
+    ===================================================================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: none;
+      border-radius: 18px;
+      padding: 12px 20px;
+      font-family: inherit;
+      font-size: 1.05rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.12s ease, filter 0.15s ease;
+      box-shadow: var(--shadow-btn);
+      text-decoration: none;
+      user-select: none;
+    }
+
+    .btn:hover { filter: brightness(1.04); transform: translateY(-2px); }
+    .btn:active { transform: translateY(3px); box-shadow: 0 2px 0 rgba(0,0,0,0.18); }
+
+    .btn-sm { padding: 8px 14px; font-size: 0.92rem; border-radius: 14px; }
+    .btn-lg { padding: 16px 28px; font-size: 1.2rem; border-radius: 22px; }
+
+    .btn-sky { background: var(--sky); color: var(--white); box-shadow: 0 5px 0 var(--sky-dark); }
+    .btn-yellow { background: var(--yellow); color: #713F12; box-shadow: 0 5px 0 var(--yellow-dark); }
+    .btn-green { background: var(--green); color: #064E3B; box-shadow: 0 5px 0 var(--green-dark); }
+    .btn-orange { background: var(--orange); color: var(--white); box-shadow: 0 5px 0 var(--orange-dark); }
+    .btn-purple { background: var(--purple); color: var(--white); box-shadow: 0 5px 0 var(--purple-dark); }
+    .btn-red { background: var(--red); color: var(--white); box-shadow: 0 5px 0 var(--red-dark); }
+    .btn-white { background: var(--white); color: var(--text-main); border: 3px solid #CBD5E1; box-shadow: 0 4px 0 #CBD5E1; }
+
+    /* =====================================================================
+       5. KONTAINER UTAMA & VIEW SECTION
+    ===================================================================== */
+    .app-container {
+      position: relative;
+      z-index: 1;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 22px 16px 60px;
+    }
+
+    .view-section {
+      display: none;
+      animation: bouncePop 0.38s ease;
+    }
+
+    .view-section.active {
+      display: block;
+    }
+
+    .card-box {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      box-shadow: var(--shadow-card);
+      border: 4px solid #E0F2FE;
+      margin-bottom: 22px;
+    }
+
+    .section-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      background: linear-gradient(135deg, #FFFFFF, #F0F9FF);
+      border: 4px solid var(--sky);
+      border-radius: var(--radius-xl);
+      padding: 18px 24px;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .section-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .section-title {
+      font-size: 1.65rem;
+      font-weight: 900;
+      color: var(--sky-dark);
+      line-height: 1.2;
+    }
+
+    .section-subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    /* =====================================================================
+       6. HALAMAN UTAMA (HOME / DASHBOARD)
+    ===================================================================== */
+    .hero-banner {
+      background: linear-gradient(135deg, #38BDF8 0%, #818CF8 55%, #C084FC 100%);
+      border-radius: 32px;
+      padding: 28px;
+      color: var(--white);
+      display: grid;
+      grid-template-columns: 1.35fr 0.85fr;
+      gap: 20px;
+      align-items: center;
+      box-shadow: 0 14px 30px rgba(56, 189, 248, 0.32);
+      border: 5px solid var(--white);
+      margin-bottom: 26px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--yellow);
+      color: #713F12;
+      font-weight: 900;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      margin-bottom: 10px;
+      box-shadow: 0 3px 0 var(--yellow-dark);
+    }
+
+    .hero-title {
+      font-size: 2.35rem;
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 10px;
+      text-shadow: 0 3px 0 rgba(0, 0, 0, 0.15);
+    }
+
+    .hero-desc {
+      font-size: 1.15rem;
+      font-weight: 700;
+      opacity: 0.96;
+      margin-bottom: 18px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 0.92rem;
+      font-weight: 800;
+    }
+
+    .hero-meta span {
+      background: rgba(255, 255, 255, 0.22);
+      padding: 6px 14px;
+      border-radius: 999px;
+      backdrop-filter: blur(4px);
+    }
+
+    .hero-characters {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 10px;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 18px;
+    }
+
+    .menu-card {
+      background: var(--white);
+      border-radius: 26px;
+      padding: 22px 18px;
+      text-align: center;
+      cursor: pointer;
+      border: 4px solid transparent;
+      box-shadow: var(--shadow-card);
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-7px) scale(1.02);
+    }
+
+    .menu-card[data-color="sky"] { border-color: var(--sky); background: linear-gradient(180deg, #FFFFFF 60%, #E0F2FE 100%); }
+    .menu-card[data-color="green"] { border-color: var(--green); background: linear-gradient(180deg, #FFFFFF 60%, #DCFCE7 100%); }
+    .menu-card[data-color="orange"] { border-color: var(--orange); background: linear-gradient(180deg, #FFFFFF 60%, #FFEDD5 100%); }
+    .menu-card[data-color="yellow"] { border-color: var(--yellow); background: linear-gradient(180deg, #FFFFFF 60%, #FEF9C3 100%); }
+    .menu-card[data-color="purple"] { border-color: var(--purple); background: linear-gradient(180deg, #FFFFFF 60%, #F3E8FF 100%); }
+    .menu-card[data-color="pink"] { border-color: var(--pink); background: linear-gradient(180deg, #FFFFFF 60%, #FCE7F3 100%); }
+    .menu-card[data-color="teal"] { border-color: #2DD4BF; background: linear-gradient(180deg, #FFFFFF 60%, #CCFBF1 100%); }
+
+    .menu-num {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--text-main);
+      color: var(--white);
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+    }
+
+    .menu-done-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: var(--green);
+      color: #064E3B;
+      font-size: 0.78rem;
+      font-weight: 900;
+      padding: 4px 10px;
+      border-radius: 999px;
+      display: none;
+    }
+
+    .menu-done-badge.show { display: inline-block; }
+
+    .menu-icon-wrap {
+      width: 84px;
+      height: 84px;
+      margin: 8px auto 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .menu-card h3 {
+      font-size: 1.35rem;
+      font-weight: 900;
+      margin-bottom: 6px;
+      color: var(--text-main);
+    }
+
+    .menu-card p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    /* =====================================================================
+       7. KOTAK ITEM POLA (GAMBAR, WARNA, SUARA, GERAK)
+    ===================================================================== */
+    .pattern-strip {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 20px;
+      background: #F8FAFC;
+      border: 3px dashed #94A3B8;
+      border-radius: 24px;
+      margin: 16px 0;
+    }
+
+    .pattern-item {
+      width: 96px;
+      height: 108px;
+      background: var(--white);
+      border: 4px solid #CBD5E1;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+      transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+    }
+
+    .pattern-item span.label {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--text-main);
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .pattern-slot {
+      width: 96px;
+      height: 108px;
+      background: var(--yellow-light);
+      border: 4px dashed var(--orange);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--orange-dark);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .pattern-slot.filled {
+      border-style: solid;
+      border-color: var(--sky);
+      background: var(--white);
+    }
+
+    .pattern-slot.drag-over {
+      transform: scale(1.08);
+      background: #FEF08A;
+      border-color: var(--green-dark);
+    }
+
+    .choice-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .choice-btn {
+      min-width: 112px;
+      min-height: 116px;
+      background: var(--white);
+      border: 4px solid var(--sky);
+      border-radius: 22px;
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-main);
+      box-shadow: 0 5px 0 var(--sky-dark);
+      transition: transform 0.15s ease;
+    }
+
+    .choice-btn:hover { transform: translateY(-4px); background: var(--sky-light); }
+    .choice-btn:active { transform: translateY(2px); }
+    .choice-btn.selected { border-color: var(--orange); background: var(--yellow-light); box-shadow: 0 5px 0 var(--orange-dark); }
+
+    /* =====================================================================
+       8. TABS & MATERI SLIDE
+    ===================================================================== */
+    .sub-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .tab-pill {
+      padding: 12px 18px;
+      border-radius: 18px;
+      border: 3px solid #CBD5E1;
+      background: var(--white);
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tab-pill.active {
+      background: var(--sky);
+      color: var(--white);
+      border-color: var(--sky-dark);
+      box-shadow: 0 4px 0 var(--sky-dark);
+    }
+
+    .materi-box {
+      background: linear-gradient(180deg, #FFFFFF, #F8FAFC);
+      border: 4px solid var(--purple);
+      border-radius: 26px;
+      padding: 24px;
+    }
+
+    .materi-text {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+      background: var(--purple-light);
+      padding: 18px 22px;
+      border-radius: 20px;
+      border-left: 8px solid var(--purple-dark);
+      margin-bottom: 18px;
+    }
+
+    .feedback-banner {
+      margin-top: 18px;
+      padding: 16px 20px;
+      border-radius: 20px;
+      font-size: 1.2rem;
+      font-weight: 900;
+      text-align: center;
+      display: none;
+    }
+
+    .feedback-banner.success {
+      display: block;
+      background: var(--green-light);
+      color: #065F46;
+      border: 4px solid var(--green-dark);
+    }
+
+    .feedback-banner.error {
+      display: block;
+      background: var(--orange-light);
+      color: #9A3412;
+      border: 4px solid var(--orange-dark);
+    }
+
+    /* =====================================================================
+       9. GAME DETEKTIF POLA CERIA
+    ===================================================================== */
+    .game-hud {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(135deg, #FEF08A, #FDE047);
+      border: 4px solid var(--yellow-dark);
+      border-radius: 22px;
+      padding: 14px 20px;
+      margin-bottom: 18px;
+      font-weight: 900;
+      font-size: 1.1rem;
+      color: #713F12;
+    }
+
+    .level-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 18px;
+      margin-top: 14px;
+    }
+
+    .level-card {
+      background: var(--white);
+      border: 4px solid var(--orange);
+      border-radius: 24px;
+      padding: 22px;
+      text-align: center;
+      box-shadow: var(--shadow-card);
+    }
+
+    /* =====================================================================
+       10. LKPD (LEMBAR KERJA PESERTA DIDIK) & MODE CETAK
+    ===================================================================== */
+    .lkpd-sheet {
+      background: #FFFFFF;
+      border: 4px solid #334155;
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .lkpd-header {
+      border-bottom: 4px double #334155;
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .lkpd-identity-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      background: #F1F5F9;
+      padding: 16px;
+      border-radius: 16px;
+      border: 2px solid #94A3B8;
+      margin-bottom: 20px;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 3px solid #94A3B8;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    .input-field:focus {
+      outline: none;
+      border-color: var(--sky-dark);
+      background: #F0F9FF;
+    }
+
+    .lkpd-question-card {
+      border: 3px solid #CBD5E1;
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 16px;
+      background: #FAFAFA;
+      page-break-inside: avoid;
+    }
+
+    .lkpd-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .lkpd-opt-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 14px;
+      border: 3px solid #CBD5E1;
+      background: var(--white);
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 0.98rem;
+      cursor: pointer;
+    }
+
+    .lkpd-opt-btn.picked {
+      border-color: var(--sky-dark);
+      background: var(--sky-light);
+      color: var(--sky-dark);
+    }
+
+    .lkpd-opt-btn.correct-ans {
+      border-color: var(--green-dark);
+      background: var(--green-light);
+      color: #065F46;
+    }
+
+    .lkpd-opt-btn.wrong-ans {
+      border-color: var(--red-dark);
+      background: #FEE2E2;
+      color: #991B1B;
+    }
+
+    /* =====================================================================
+       11. EVALUASI & SERTIFIKAT
+    ===================================================================== */
+    .eval-nav-dots {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+
+    .eval-dot {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      border: 3px solid #CBD5E1;
+      background: var(--white);
+      font-weight: 900;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .eval-dot.active { border-color: var(--sky-dark); background: var(--sky); color: var(--white); }
+    .eval-dot.answered { background: var(--green-light); border-color: var(--green-dark); color: #065F46; }
+
+    .eval-option-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      text-align: left;
+      padding: 14px 18px;
+      margin-bottom: 12px;
+      border-radius: 18px;
+      border: 3px solid #CBD5E1;
+      background: var(--white);
+      font-family: inherit;
+      font-size: 1.1rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .eval-option-card:hover { border-color: var(--sky); background: #F0F9FF; }
+    .eval-option-card.selected { border-color: var(--purple-dark); background: var(--purple-light); }
+
+    .opt-letter {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--sky);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    .certificate-frame {
+      background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 50%, #E0F2FE 100%);
+      border: 10px double #D97706;
+      border-radius: 24px;
+      padding: 34px 26px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+      margin-top: 20px;
+    }
+
+    /* =====================================================================
+       12. MODAL PANDUAN GURU & CONFETTI
+    ===================================================================== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.65);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-backdrop.open { display: flex; }
+
+    .modal-card {
+      background: var(--white);
+      border-radius: 28px;
+      border: 5px solid var(--sky);
+      max-width: 720px;
+      width: 100%;
+      max-height: 88vh;
+      overflow-y: auto;
+      padding: 26px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+    }
+
+    .confetti-piece {
+      position: fixed;
+      width: 12px;
+      height: 12px;
+      top: -20px;
+      z-index: 999;
+      pointer-events: none;
+      border-radius: 3px;
+      animation: confettiFall 2.4s linear forwards;
+    }
+
+    @keyframes confettiFall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* =====================================================================
+       13. RESPONSIF & ATURAN PRINT (LKPD & SERTIFIKAT)
+    ===================================================================== */
+    @media (max-width: 768px) {
+      .hero-banner { grid-template-columns: 1fr; text-align: center; }
+      .hero-title { font-size: 1.85rem; }
+      .hero-meta { justify-content: center; }
+      .pattern-item, .pattern-slot { width: 78px; height: 92px; }
+      .section-title { font-size: 1.35rem; }
+    }
+
+    @media print {
+      body { background: #FFFFFF !important; }
+      .topbar, .bg-decorations, .no-print, .section-header { display: none !important; }
+      .app-container { padding: 0; max-width: 100%; }
+      .lkpd-sheet, .certificate-frame { border: 2px solid #000; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LATAR BELAKANG GEOMETRI MELAYANG -->
+  <div class="bg-decorations" aria-hidden="true">
+    <svg class="floating-shape" style="top:8%; left:4%;" width="70" height="70" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="42" fill="#38BDF8"/>
+    </svg>
+    <svg class="floating-shape" style="top:18%; right:6%;" width="80" height="80" viewBox="0 0 100 100">
+      <polygon points="50,8 92,88 8,88" fill="#FACC15"/>
+    </svg>
+    <svg class="floating-shape" style="bottom:18%; left:7%;" width="75" height="75" viewBox="0 0 100 100">
+      <rect x="14" y="14" width="72" height="72" rx="14" fill="#4ADE80"/>
+    </svg>
+    <svg class="floating-shape" style="bottom:12%; right:8%;" width="85" height="85" viewBox="0 0 100 100">
+      <polygon points="50,5 63,35 95,38 71,59 78,91 50,74 22,91 29,59 5,38 37,35" fill="#FB923C"/>
+    </svg>
+    <svg class="floating-shape" style="top:52%; left:2%;" width="65" height="65" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="40" fill="#C084FC"/>
+    </svg>
+    <svg class="floating-shape" style="top:48%; right:3%;" width="68" height="68" viewBox="0 0 100 100">
+      <polygon points="50,8 92,88 8,88" fill="#F472B6"/>
+    </svg>
+  </div>
+
+  <!-- HEADER / TOPBAR NAVIGASI -->
+  <header class="topbar no-print">
+    <div class="topbar-left">
+      <div class="brand-badge" onclick="navigateTo('home')" title="Kembali ke Menu Utama">
+        <svg width="26" height="26" viewBox="0 0 100 100">
+          <polygon points="50,5 63,35 95,38 71,59 78,91 50,74 22,91 29,59 5,38 37,35" fill="#FACC15" stroke="#FFF" stroke-width="6"/>
+        </svg>
+        <span>PETUALANGAN POLA CERIA</span>
+      </div>
+      <button class="btn btn-sky btn-sm" onclick="navigateTo('home')">
+        🏠 HOME
+      </button>
+      <button class="btn btn-purple btn-sm" onclick="openTeacherModal()">
+        👩‍🏫 Petunjuk Guru
+      </button>
+    </div>
+
+    <div class="topbar-right">
+      <div class="progress-pill" title="Progres Belajar Siswa">
+        <span>Progres: <strong id="progressText">0%</strong></span>
+        <div class="progress-mini-bar">
+          <div class="progress-mini-fill" id="progressFill"></div>
+        </div>
+      </div>
+      <div class="stat-pill" title="Total Bintang & Poin">
+        <span>⭐ <strong id="totalStarsDisplay">0</strong></span>
+        <span>|</span>
+        <span>🏆 <strong id="totalPointsDisplay">0</strong> Poin</span>
+      </div>
+      <button class="btn btn-yellow btn-sm" id="audioToggleBtn" onclick="toggleAudio()">
+        🔊 Suara: ON
+      </button>
+    </div>
+  </header>
+
+  <!-- KONTAINER UTAMA APLIKASI -->
+  <main class="app-container">
+
+    <!-- =================================================================
+         HALAMAN UTAMA (HOME)
+    ================================================================== -->
+    <section id="view-home" class="view-section active">
+      <div class="hero-banner">
+        <div>
+          <span class="hero-badge">✨ Matematika Kelas 2 SD • Fase A</span>
+          <h1 class="hero-title">PETUALANGAN POLA CERIA</h1>
+          <p class="hero-desc">
+            Ayo belajar mengenal <strong>Pola Gambar</strong>, <strong>Pola Warna</strong>, <strong>Pola Suara</strong>, dan <strong>Pola Gerak</strong> bersama Budi dan Sari!
+          </p>
+          <div style="display:flex; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+            <button class="btn btn-yellow btn-lg" onclick="startAdventure()">
+              🚀 Mulai Petualangan!
+            </button>
+            <button class="btn btn-white btn-lg" onclick="speakWelcome()">
+              🔊 Dengar Sapaan
+            </button>
+          </div>
+          <div class="hero-meta">
+            <span>👩‍🏫 Pengembang: Yuyun Apriyanti, S.Pd.</span>
+            <span>🏫 SD Negeri 3 Kelaten</span>
+          </div>
+        </div>
+
+        <!-- ILUSTRASI KARAKTER ANAK LAKI-LAKI & PEREMPUAN SVG -->
+        <div class="hero-characters">
+          <!-- Budi (Anak Laki-laki) -->
+          <svg width="135" height="165" viewBox="0 0 140 170" aria-label="Karakter Budi">
+            <ellipse cx="70" cy="160" rx="42" ry="8" fill="rgba(0,0,0,0.18)"/>
+            <!-- Badan -->
+            <rect x="42" y="96" width="56" height="52" rx="18" fill="#38BDF8" stroke="#0369A1" stroke-width="3"/>
+            <polygon points="70,104 75,115 87,116 78,124 81,136 70,129 59,136 62,124 53,116 65,115" fill="#FACC15"/>
+            <!-- Tangan melambai -->
+            <path d="M42 108 Q18 92 22 72" stroke="#FDBA74" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M98 108 Q118 118 114 136" stroke="#FDBA74" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <!-- Kepala -->
+            <circle cx="70" cy="58" r="36" fill="#FED7AA" stroke="#9A3412" stroke-width="3"/>
+            <!-- Rambut -->
+            <path d="M34 52 C34 22, 106 22, 106 52 C98 36, 82 34, 70 38 C56 34, 42 38, 34 52 Z" fill="#1E293B"/>
+            <!-- Mata & Senyum -->
+            <circle cx="57" cy="56" r="4.5" fill="#1E293B"/>
+            <circle cx="83" cy="56" r="4.5" fill="#1E293B"/>
+            <circle cx="58.5" cy="54.5" r="1.5" fill="#FFF"/>
+            <circle cx="84.5" cy="54.5" r="1.5" fill="#FFF"/>
+            <ellipse cx="48" cy="65" rx="5" ry="3" fill="#FDA4AF"/>
+            <ellipse cx="92" cy="65" rx="5" ry="3" fill="#FDA4AF"/>
+            <path d="M56 70 Q70 84 84 70" stroke="#9A3412" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+          </svg>
+
+          <!-- Sari (Anak Perempuan Berhijab Ceria) -->
+          <svg width="135" height="165" viewBox="0 0 140 170" aria-label="Karakter Sari">
+            <ellipse cx="70" cy="160" rx="42" ry="8" fill="rgba(0,0,0,0.18)"/>
+            <!-- Hijab luar -->
+            <path d="M28 64 C28 20, 112 20, 112 64 L118 118 Q70 132 22 118 Z" fill="#F472B6" stroke="#BE185D" stroke-width="3"/>
+            <!-- Badan -->
+            <rect x="44" y="106" width="52" height="44" rx="16" fill="#FACC15" stroke="#CA8A04" stroke-width="3"/>
+            <!-- Tangan -->
+            <path d="M44 114 Q24 122 28 138" stroke="#FDBA74" stroke-width="11" stroke-linecap="round" fill="none"/>
+            <path d="M96 114 Q120 96 116 76" stroke="#FDBA74" stroke-width="11" stroke-linecap="round" fill="none"/>
+            <!-- Wajah -->
+            <circle cx="70" cy="62" r="30" fill="#FED7AA" stroke="#9A3412" stroke-width="2.5"/>
+            <!-- Mata & Senyum -->
+            <circle cx="59" cy="60" r="4.2" fill="#1E293B"/>
+            <circle cx="81" cy="60" r="4.2" fill="#1E293B"/>
+            <circle cx="60.5" cy="58.5" r="1.5" fill="#FFF"/>
+            <circle cx="82.5" cy="58.5" r="1.5" fill="#FFF"/>
+            <ellipse cx="51" cy="68" rx="4.5" ry="2.8" fill="#FDA4AF"/>
+            <ellipse cx="89" cy="68" rx="4.5" ry="2.8" fill="#FDA4AF"/>
+            <path d="M58 72 Q70 83 82 72" stroke="#9A3412" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- 7 MENU UTAMA -->
+      <div class="menu-grid">
+        <!-- MENU 1: MATERI -->
+        <div class="menu-card" data-color="sky" onclick="navigateTo('materi')">
+          <span class="menu-num">1</span>
+          <span class="menu-done-badge" id="badge-materi">✓ Selesai</span>
+          <div class="menu-icon-wrap">
+            <svg width="76" height="76" viewBox="0 0 100 100">
+              <rect x="14" y="18" width="72" height="64" rx="12" fill="#38BDF8" stroke="#0284C7" stroke-width="4"/>
+              <path d="M50 18 V82" stroke="#FFF" stroke-width="4"/>
+              <circle cx="32" cy="42" r="8" fill="#FACC15"/>
+              <polygon points="68,34 77,50 59,50" fill="#4ADE80"/>
+              <rect x="24" y="58" width="16" height="10" rx="3" fill="#FFF"/>
+              <rect x="60" y="58" width="16" height="10" rx="3" fill="#FFF"/>
+            </svg>
+          </div>
+          <h3>1. MATERI</h3>
+          <p>Belajar pengertian & 4 jenis pola dengan suara narasi.</p>
+        </div>
+
+        <!-- MENU 2: SIMULASI -->
+        <div class="menu-card" data-color="green" onclick="navigateTo('simulasi')">
+          <span class="menu-num">2</span>
+          <span class="menu-done-badge" id="badge-simulasi">✓ Selesai</span>
+          <div class="menu-icon-wrap">
+            <svg width="76" height="76" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="38" fill="#4ADE80" stroke="#16A34A" stroke-width="4"/>
+              <polygon points="42,32 72,50 42,68" fill="#FFF"/>
+            </svg>
+          </div>
+          <h3>2. SIMULASI</h3>
+          <p>Amati dan coba lanjutkan pola gambar, warna, suara & gerak.</p>
+        </div>
+
+        <!-- MENU 3: PRAKTIKUM -->
+        <div class="menu-card" data-color="orange" onclick="navigateTo('praktikum')">
+          <span class="menu-num">3</span>
+          <span class="menu-done-badge" id="badge-praktikum">✓ Selesai</span>
+          <div class="menu-icon-wrap">
+            <svg width="76" height="76" viewBox="0 0 100 100">
+              <rect x="16" y="20" width="30" height="30" rx="8" fill="#FB923C" stroke="#EA580C" stroke-width="4"/>
+              <circle cx="69" cy="35" r="15" fill="#FACC15" stroke="#CA8A04" stroke-width="4"/>
+              <polygon points="31,56 46,84 16,84" fill="#38BDF8" stroke="#0284C7" stroke-width="4"/>
+              <polygon points="69,55 73,65 84,66 76,73 78,84 69,78 60,84 62,73 54,66 65,65" fill="#C084FC" stroke="#9333EA" stroke-width="3"/>
+            </svg>
+          </div>
+          <h3>3. PRAKTIKUM</h3>
+          <p>Susun kartu bentuk, warna, suara & gerakan sesuai urutan.</p>
+        </div>
+
+        <!-- MENU 4: GAME -->
+        <div class="menu-card" data-color="yellow" onclick="navigateTo('game')">
+          <span class="menu-num">4</span>
+          <span class="menu-done-badge" id="badge-game">✓ Selesai</span>
+          <div class="menu-icon-wrap">
+            <svg width="76" height="76" viewBox="0 0 100 100">
+              <rect x="12" y="28" width="76" height="46" rx="22" fill="#FACC15" stroke="#CA8A04" stroke-width="4"/>
+              <path d="M32 42 V60 M23 51 H41" stroke="#713F12" stroke-width="6" stroke-linecap="round"/>
+              <circle cx="66" cy="45" r="5" fill="#EF4444"/>
+              <circle cx="76" cy="55" r="5" fill="#22C55E"/>
+            </svg>
+          </div>
+          <h3>4. GAME SERU</h3>
+          <p>Detektif Pola Ceria: 3 Level petualangan kumpulkan bintang!</p>
+        </div>
+
+        <!-- MENU 5: LKPD -->
+        <div class="menu-card" data-color="purple" onclick="navigateTo('lkpd')">
+          <span class="menu-num">5</span>
+          <span class="menu-done-badge" id="badge-lkpd">✓ Selesai</span>
+          <div class="menu-icon-wrap">
+            <svg width="76" height="76" viewBox="0 0 100 100">
+              <rect x="20" y="12" width="60" height="76" rx="10" fill="#C084FC" stroke="#9333EA" stroke-width="4"/>
+              <rect x="30" y="26" width="40" height="8" rx="4" fill="#FFF"/>
+              <rect x="30" y="42" width="40" height="8" rx="4" fill="#FFF"/>
+              <rect x="30" y="58" width="26" height="8" rx="4" fill="#FEF08A"/>
+            </svg>
+          </div>
+          <h3>5. LKPD DIGITAL</h3>
+          <p>Lembar Kerja Peserta Didik interaktif & siap dicetak.</p>
+        </div>
+
+        <!-- MENU 6: EVALUASI -->
+        <div class="menu-card" data-color="pink" onclick="navigateTo('evaluasi')">
+          <span class="menu-num">6</span>
+          <span class="menu-done-badge" id="badge-evaluasi">✓ Selesai</span>
+          <div class="menu-icon-wrap">
+            <svg width="76" height="76" viewBox="0 0 100 100">
+              <path d="M30 22 H70 V48 C70 62 58 70 50 70 C42 70 30 62 30 48 Z" fill="#FACC15" stroke="#CA8A04" stroke-width="4"/>
+              <rect x="44" y="70" width="12" height="12" fill="#CA8A04"/>
+              <rect x="34" y="80" width="32" height="8" rx="4" fill="#F472B6"/>
+              <polygon points="50,32 54,41 64,42 56,48 58,58 50,53 42,58 44,48 36,42 46,41" fill="#FFF"/>
+            </svg>
+          </div>
+          <h3>6. EVALUASI</h3>
+          <p>10 soal uji pemahaman, nilai otomatis & sertifikat kelulusan.</p>
+        </div>
+
+        <!-- MENU 7: PENGEMBANG -->
+        <div class="menu-card" data-color="teal" onclick="navigateTo('pengembang')">
+          <span class="menu-num">7</span>
+          <div class="menu-icon-wrap">
+            <svg width="76" height="76" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="38" fill="#2DD4BF" stroke="#0D9488" stroke-width="4"/>
+              <circle cx="50" cy="38" r="14" fill="#FED7AA"/>
+              <path d="M26 78 C28 58, 72 58, 74 78" fill="#FFF"/>
+            </svg>
+          </div>
+          <h3>7. PENGEMBANG</h3>
+          <p>Profil pembuat media pembelajaran SD Negeri 3 Kelaten.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         MENU 1: MATERI PEMBELAJARAN
+    ================================================================== -->
+    <section id="view-materi" class="view-section">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <span style="font-size:2.4rem;">📚</span>
+          <div>
+            <h2 class="section-title">MENU 1: MATERI MENGENAL POLA</h2>
+            <p class="section-subtitle">Pilih topik materi dan dengarkan penjelasan suaranya!</p>
+          </div>
+        </div>
+        <button class="btn btn-white" onclick="navigateTo('home')">⬅️ Menu Utama</button>
+      </div>
+
+      <div class="sub-tabs" id="materiTabs">
+        <button class="tab-pill active" onclick="selectMateri(0)">A. Pengertian Pola</button>
+        <button class="tab-pill" onclick="selectMateri(1)">B. Pola Gambar</button>
+        <button class="tab-pill" onclick="selectMateri(2)">C. Pola Warna</button>
+        <button class="tab-pill" onclick="selectMateri(3)">D. Pola Suara</button>
+        <button class="tab-pill" onclick="selectMateri(4)">E. Pola Gerak</button>
+      </div>
+
+      <div class="materi-box" id="materiContent">
+        <!-- Diisi secara dinamis oleh JavaScript -->
+      </div>
+    </section>
+
+    <!-- =================================================================
+         MENU 2: SIMULASI INTERAKTIF
+    ================================================================== -->
+    <section id="view-simulasi" class="view-section">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <span style="font-size:2.4rem;">🧪</span>
+          <div>
+            <h2 class="section-title">MENU 2: SIMULASI POLA</h2>
+            <p class="section-subtitle">Amati urutan polanya lalu klik jawaban yang tepat untuk melengkapi!</p>
+          </div>
+        </div>
+        <button class="btn btn-white" onclick="navigateTo('home')">⬅️ Menu Utama</button>
+      </div>
+
+      <div class="sub-tabs" id="simulasiTabs">
+        <button class="tab-pill active" onclick="selectSimulasiType('gambar')">1. Pola Gambar</button>
+        <button class="tab-pill" onclick="selectSimulasiType('warna')">2. Pola Warna</button>
+        <button class="tab-pill" onclick="selectSimulasiType('suara')">3. Pola Suara</button>
+        <button class="tab-pill" onclick="selectSimulasiType('gerak')">4. Pola Gerak</button>
+      </div>
+
+      <div class="card-box" id="simulasiWorkspace">
+        <!-- Diisi secara dinamis oleh JavaScript -->
+      </div>
+    </section>
+
+    <!-- =================================================================
+         MENU 3: PRAKTIKUM INTERAKTIF (DRAG & DROP / KLIK SUSUN)
+    ================================================================== -->
+    <section id="view-praktikum" class="view-section">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <span style="font-size:2.4rem;">🧩</span>
+          <div>
+            <h2 class="section-title">MENU 3: PRAKTIKUM SUSUN POLA</h2>
+            <p class="section-subtitle">Seret (Drag) atau Klik kartu pilihan untuk mengisi kotak yang kosong!</p>
+          </div>
+        </div>
+        <button class="btn btn-white" onclick="navigateTo('home')">⬅️ Menu Utama</button>
+      </div>
+
+      <div class="sub-tabs" id="praktikumTabs">
+        <button class="tab-pill active" onclick="selectPraktikum(0)">Aktivitas 1: Gambar</button>
+        <button class="tab-pill" onclick="selectPraktikum(1)">Aktivitas 2: Warna</button>
+        <button class="tab-pill" onclick="selectPraktikum(2)">Aktivitas 3: Suara</button>
+        <button class="tab-pill" onclick="selectPraktikum(3)">Aktivitas 4: Gerak</button>
+      </div>
+
+      <div class="card-box" id="praktikumWorkspace">
+        <!-- Diisi secara dinamis oleh JavaScript -->
+      </div>
+    </section>
+
+    <!-- =================================================================
+         MENU 4: GAME DETEKTIF POLA CERIA
+    ================================================================== -->
+    <section id="view-game" class="view-section">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <span style="font-size:2.4rem;">🕵️‍♂️</span>
+          <div>
+            <h2 class="section-title">GAME: DETEKTIF POLA CERIA</h2>
+            <p class="section-subtitle">Pecahkan teka-teki pola di 3 level dan kumpulkan semua bintang!</p>
+          </div>
+        </div>
+        <button class="btn btn-white" onclick="navigateTo('home')">⬅️ Menu Utama</button>
+      </div>
+
+      <div id="gameWorkspace">
+        <!-- Diisi secara dinamis oleh JavaScript -->
+      </div>
+    </section>
+
+    <!-- =================================================================
+         MENU 5: LKPD DIGITAL & CETAK
+    ================================================================== -->
+    <section id="view-lkpd" class="view-section">
+      <div class="section-header no-print">
+        <div class="section-title-wrap">
+          <span style="font-size:2.4rem;">📝</span>
+          <div>
+            <h2 class="section-title">MENU 5: LKPD PESERTA DIDIK</h2>
+            <p class="section-subtitle">Kerjakan langsung di layar atau klik tombol Cetak LKPD!</p>
+          </div>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn btn-purple" onclick="window.print()">🖨️ Cetak LKPD</button>
+          <button class="btn btn-white" onclick="navigateTo('home')">⬅️ Menu Utama</button>
+        </div>
+      </div>
+
+      <div class="lkpd-sheet">
+        <div class="lkpd-header">
+          <h2 style="font-size:1.6rem; font-weight:900; color:#0F172A;">LEMBAR KERJA PESERTA DIDIK (LKPD)</h2>
+          <p style="font-weight:800; color:#334155;">Mata Pelajaran: Matematika • Fase A / Kelas 2 SD • Materi: Mengenal Pola</p>
+          <p style="font-size:0.9rem; color:#64748B;">SD Negeri 3 Kelaten • Pengembang: Yuyun Apriyanti, S.Pd.</p>
+        </div>
+
+        <div class="lkpd-identity-grid">
+          <div>
+            <label style="font-weight:800;">Nama Lengkap:</label>
+            <input type="text" id="lkpdName" class="input-field" placeholder="Ketik namamu di sini..." onchange="syncStudentName(this.value)" />
+          </div>
+          <div>
+            <label style="font-weight:800;">Kelas:</label>
+            <input type="text" id="lkpdClass" class="input-field" value="2 (Dua) SD" />
+          </div>
+          <div>
+            <label style="font-weight:800;">Tanggal:</label>
+            <input type="date" id="lkpdDate" class="input-field" />
+          </div>
+        </div>
+
+        <div style="background:#FEF9C3; border:2px solid #EAB308; padding:14px 18px; border-radius:14px; margin-bottom:20px; font-weight:800;">
+          📌 <strong>Petunjuk:</strong> Amatilah gambar, warna, suara, dan gerakan berikut. Kemudian pilihlah jawaban yang paling benar!
+        </div>
+
+        <div id="lkpdQuestionsContainer"></div>
+
+        <!-- KEGIATAN KREATIVITAS MEMBUAT POLA SENDIRI -->
+        <div class="lkpd-question-card" style="background:#F0F9FF; border-color:#38BDF8;">
+          <h3 style="font-size:1.2rem; font-weight:900; color:#0369A1; margin-bottom:6px;">
+            🎨 Kegiatan Kreativitas: Buatlah Pola Kreasimu Sendiri!
+          </h3>
+          <p style="font-weight:700; color:#334155; margin-bottom:12px;">
+            Klik bentuk/warna di bawah ini untuk menyusun pola berulang buatanmu sendiri (minimal 6 kotak):
+          </p>
+          <div class="no-print" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px;">
+            <button class="btn btn-sm btn-white" onclick="addCreativeItem('lingkaran_merah')">🔴 Lingkaran Merah</button>
+            <button class="btn btn-sm btn-white" onclick="addCreativeItem('segitiga_kuning')">🔺 Segitiga Kuning</button>
+            <button class="btn btn-sm btn-white" onclick="addCreativeItem('persegi_hijau')">🟩 Persegi Hijau</button>
+            <button class="btn btn-sm btn-white" onclick="addCreativeItem('bintang_ungu')">⭐ Bintang Ungu</button>
+            <button class="btn btn-sm btn-red" onclick="clearCreativeBoard()">🗑️ Hapus Susunan</button>
+          </div>
+          <div class="pattern-strip" id="creativeBoard" style="min-height:110px; background:#FFF;">
+            <span style="color:#94A3B8; font-weight:800;">Susunan pola kreasimu akan tampil di sini...</span>
+          </div>
+        </div>
+
+        <div class="no-print" style="display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin-top:24px;">
+          <button class="btn btn-green btn-lg" onclick="gradeLKPD()">✅ Periksa Jawaban LKPD</button>
+          <button class="btn btn-orange btn-lg" onclick="resetLKPD()">🔄 Ulangi LKPD</button>
+          <button class="btn btn-purple btn-lg" onclick="window.print()">🖨️ Cetak LKPD</button>
+        </div>
+
+        <div id="lkpdResultBox" class="feedback-banner" style="margin-top:20px;"></div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         MENU 6: EVALUASI AKHIR & SERTIFIKAT
+    ================================================================== -->
+    <section id="view-evaluasi" class="view-section">
+      <div class="section-header no-print">
+        <div class="section-title-wrap">
+          <span style="font-size:2.4rem;">🏆</span>
+          <div>
+            <h2 class="section-title">MENU 6: EVALUASI AKHIR</h2>
+            <p class="section-subtitle">Jawab 10 soal pilihan ganda untuk mendapatkan nilai & sertifikat!</p>
+          </div>
+        </div>
+        <button class="btn btn-white" onclick="navigateTo('home')">⬅️ Menu Utama</button>
+      </div>
+
+      <div id="evaluasiWorkspace"></div>
+    </section>
+
+    <!-- =================================================================
+         MENU 7: PROFIL PENGEMBANG
+    ================================================================== -->
+    <section id="view-pengembang" class="view-section">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <span style="font-size:2.4rem;">👩‍🏫</span>
+          <div>
+            <h2 class="section-title">MENU 7: PROFIL PENGEMBANG</h2>
+            <p class="section-subtitle">Informasi pembuat Media Pembelajaran Interaktif</p>
+          </div>
+        </div>
+        <button class="btn btn-white" onclick="navigateTo('home')">⬅️ Menu Utama</button>
+      </div>
+
+      <div class="card-box" style="max-width:820px; margin:0 auto; border-color:var(--purple);">
+        <div style="display:flex; flex-wrap:wrap; gap:26px; align-items:center; justify-content:center;">
+          <!-- AVATAR ILUSTRASI GURU RAMAH SVG -->
+          <div style="flex-shrink:0; text-align:center;">
+            <svg width="180" height="190" viewBox="0 0 180 190">
+              <circle cx="90" cy="95" r="84" fill="#F3E8FF" stroke="#C084FC" stroke-width="5"/>
+              <!-- Hijab Guru -->
+              <path d="M42 82 C42 28, 138 28, 138 82 L148 152 Q90 172 32 152 Z" fill="#0284C7" stroke="#0369A1" stroke-width="3"/>
+              <!-- Baju Blazer -->
+              <path d="M44 148 Q90 132 136 148 L142 174 Q90 184 38 174 Z" fill="#FACC15" stroke="#CA8A04" stroke-width="3"/>
+              <!-- Wajah -->
+              <circle cx="90" cy="78" r="36" fill="#FED7AA" stroke="#9A3412" stroke-width="2.5"/>
+              <!-- Kacamata Ramah -->
+              <rect x="64" y="68" width="22" height="15" rx="6" fill="rgba(255,255,255,0.4)" stroke="#1E293B" stroke-width="3"/>
+              <rect x="94" y="68" width="22" height="15" rx="6" fill="rgba(255,255,255,0.4)" stroke="#1E293B" stroke-width="3"/>
+              <line x1="86" y1="75" x2="94" y2="75" stroke="#1E293B" stroke-width="3"/>
+              <!-- Mata & Senyum -->
+              <circle cx="75" cy="75" r="3.5" fill="#1E293B"/>
+              <circle cx="105" cy="75" r="3.5" fill="#1E293B"/>
+              <path d="M76 92 Q90 104 104 92" stroke="#9A3412" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
+
+          <div style="flex:1; min-width:260px;">
+            <span style="background:var(--yellow); color:#713F12; padding:6px 14px; border-radius:999px; font-weight:900; font-size:0.9rem;">
+              Profil Pengembang Media
+            </span>
+            <h3 style="font-size:1.85rem; font-weight:900; color:var(--purple-dark); margin:10px 0 12px;">
+              Yuyun Apriyanti, S.Pd.
+            </h3>
+
+            <div style="display:grid; gap:10px; font-size:1.05rem; font-weight:700; margin-bottom:16px;">
+              <div style="background:#F8FAFC; padding:10px 14px; border-radius:14px; border-left:5px solid var(--sky);">
+                🏫 <strong>Instansi:</strong> SD Negeri 3 Kelaten
+              </div>
+              <div style="background:#F8FAFC; padding:10px 14px; border-radius:14px; border-left:5px solid var(--green);">
+                📐 <strong>Mata Pelajaran:</strong> Matematika
+              </div>
+              <div style="background:#F8FAFC; padding:10px 14px; border-radius:14px; border-left:5px solid var(--orange);">
+                🎓 <strong>Fase / Kelas:</strong> Fase A / Kelas 2 SD
+              </div>
+            </div>
+
+            <div style="background:var(--purple-light); padding:16px 18px; border-radius:18px; font-size:1rem; font-weight:700; color:var(--text-main); line-height:1.6;">
+              “Media Pembelajaran Interaktif <strong>Petualangan Pola Ceria</strong> dikembangkan sebagai sarana pembelajaran matematika yang menyenangkan, interaktif, dan membantu peserta didik mengenal pola gambar, warna, suara, dan gerak melalui kegiatan mengamati, mencoba, bermain, dan berlatih.”
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL PETUNJUK PENGGUNAAN UNTUK GURU -->
+  <div class="modal-backdrop" id="teacherModal" onclick="if(event.target===this) closeTeacherModal()">
+    <div class="modal-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <h2 style="font-size:1.5rem; font-weight:900; color:var(--sky-dark);">👩‍🏫 Petunjuk Penggunaan & Capaian Belajar</h2>
+        <button class="btn btn-red btn-sm" onclick="closeTeacherModal()">✖ Tutup</button>
+      </div>
+
+      <div style="background:#E0F2FE; padding:16px; border-radius:18px; margin-bottom:16px;">
+        <h3 style="font-weight:900; color:#0369A1; margin-bottom:8px;">🎯 Tujuan Pembelajaran (Fase A - Kelas 2 SD):</h3>
+        <ol style="padding-left:22px; font-weight:700; line-height:1.7;">
+          <li>Siswa mampu mengenali pola gambar sederhana.</li>
+          <li>Siswa mampu mengenali pola warna sederhana.</li>
+          <li>Siswa mampu mengenali pola suara berulang.</li>
+          <li>Siswa mampu mengenali pola gerak berulang.</li>
+          <li>Siswa mampu melanjutkan urutan pola.</li>
+          <li>Siswa mampu membuat pola sederhana berdasarkan kreativitasnya.</li>
+        </ol>
+      </div>
+
+      <div style="background:#FEF9C3; padding:16px; border-radius:18px; margin-bottom:16px;">
+        <h3 style="font-weight:900; color:#854D0E; margin-bottom:8px;">🧭 Alur Penggunaan di Kelas:</h3>
+        <ul style="padding-left:22px; font-weight:700; line-height:1.7;">
+          <li><strong>Langkah 1 (Materi):</strong> Ajak siswa mendengarkan narasi dan menirukan pola suara (tepuk & hentak) serta pola gerak secara bersama-sama.</li>
+          <li><strong>Langkah 2 (Simulasi & Praktikum):</strong> Siswa mencoba menebak dan menyusun urutan pola secara mandiri atau berkelompok di layar/papan interaktif.</li>
+          <li><strong>Langkah 3 (Game):</strong> Gunakan Game <em>Detektif Pola Ceria</em> sebagai kuis penyemangat kelas.</li>
+          <li><strong>Langkah 4 (LKPD & Evaluasi):</strong> Siswa mengerjakan LKPD (dapat dicetak) dan Evaluasi Akhir untuk memperoleh sertifikat.</li>
+        </ul>
+      </div>
+
+      <div style="text-align:right;">
+        <button class="btn btn-sky" onclick="closeTeacherModal()">Mengerti, Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       JAVASCRIPT LENGKAP: AUDIO ENGINE, SVG FACTORY, SIMULASI, PRAKTIKUM,
+       GAME, LKPD, EVALUASI & SERTIFIKAT
+  ====================================================================== -->
+  <script>
+    /* =====================================================================
+       A. STATE GLOBAL APLIKASI
+    ===================================================================== */
+    const appState = {
+      audioEnabled: true,
+      studentName: "",
+      totalPoints: 0,
+      totalStars: 0,
+      completedMenus: {
+        materi: false,
+        simulasi: false,
+        praktikum: false,
+        game: false,
+        lkpd: false,
+        evaluasi: false
+      },
+      materiIndex: 0,
+      simulasiType: 'gambar',
+      simulasiStep: 0,
+      praktikumIndex: 0,
+      praktikumSlots: [],
+      game: {
+        level: 1,
+        qIndex: 0,
+        score: 0,
+        levelStars: [0, 0, 0],
+        playing: false
+      },
+      lkpdAnswers: {},
+      creativeItems: [],
+      eval: {
+        started: false,
+        currentQ: 0,
+        answers: Array(10).fill(null),
+        submitted: false
+      }
+    };
+
+    /* =====================================================================
+       B. SISTEM AUDIO: WEB AUDIO API (SFX) + SPEECHSYNTHESIS (TTS ID-ID)
+    ===================================================================== */
+    let audioCtx = null;
+
+    function ensureAudioCtx() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (AudioContext) {
+          audioCtx = new AudioContext();
+        }
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function toggleAudio() {
+      appState.audioEnabled = !appState.audioEnabled;
+      const btn = document.getElementById('audioToggleBtn');
+      if (appState.audioEnabled) {
+        btn.innerHTML = '🔊 Suara: ON';
+        btn.className = 'btn btn-yellow btn-sm';
+        playTone(587.33, 0.12, 'sine');
+      } else {
+        btn.innerHTML = '🔇 Suara: OFF';
+        btn.className = 'btn btn-white btn-sm';
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      }
+    }
+
+    // Text-to-Speech Bahasa Indonesia dengan fallback aman
+    function speakText(text) {
+      if (!appState.audioEnabled) return;
+      try {
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+          const utter = new SpeechSynthesisUtterance(text);
+          utter.lang = 'id-ID';
+          utter.rate = 0.96;
+          utter.pitch = 1.12;
+          const voices = window.speechSynthesis.getVoices();
+          const idVoice = voices.find(v => v.lang && v.lang.toLowerCase().includes('id'));
+          if (idVoice) utter.voice = idVoice;
+          window.speechSynthesis.speak(utter);
+        }
+      } catch (e) {
+        // Tetap berjalan normal jika TTS tidak tersedia
+      }
+    }
+
+    // Suara sintetis Web Audio API
+    function playTone(freq, duration = 0.18, type = 'triangle', startTimeOffset = 0) {
+      if (!appState.audioEnabled) return;
+      ensureAudioCtx();
+      if (!audioCtx) return;
+      const now = audioCtx.currentTime + startTimeOffset;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, now);
+      gain.gain.setValueAtTime(0.28, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + duration);
+    }
+
+    // Suara TEPUK TANGAN (Crisp Clap)
+    function playClapSound() {
+      if (!appState.audioEnabled) return;
+      ensureAudioCtx();
+      if (!audioCtx) return;
+      const now = audioCtx.currentTime;
+      const bufferSize = audioCtx.sampleRate * 0.18;
+      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (audioCtx.sampleRate * 0.035));
+      }
+      const noise = audioCtx.createBufferSource();
+      noise.buffer = buffer;
+
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.value = 1250;
+      filter.Q.value = 1.4;
+
+      const gain = audioCtx.createGain();
+      gain.gain.setValueAtTime(0.85, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.18);
+
+      noise.connect(filter);
+      filter.connect(gain);
+      gain.connect(audioCtx.destination);
+      noise.start(now);
+    }
+
+    // Suara HENTAK KAKI (Deep Stomp)
+    function playStompSound() {
+      if (!appState.audioEnabled) return;
+      ensureAudioCtx();
+      if (!audioCtx) return;
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(145, now);
+      osc.frequency.exponentialRampToValueAtTime(38, now + 0.24);
+
+      gain.gain.setValueAtTime(0.95, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.26);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.27);
+    }
+
+    function playCorrectSound() {
+      playTone(523.25, 0.14, 'triangle', 0);
+      playTone(659.25, 0.14, 'triangle', 0.11);
+      playTone(783.99, 0.25, 'triangle', 0.22);
+    }
+
+    function playWrongSound() {
+      playTone(260, 0.18, 'sawtooth', 0);
+      playTone(195, 0.28, 'sawtooth', 0.16);
+    }
+
+    function playVictorySound() {
+      const notes = [523.25, 659.25, 783.99, 1046.5, 783.99, 1046.5];
+      const times = [0, 0.12, 0.24, 0.36, 0.54, 0.68];
+      notes.forEach((n, idx) => playTone(n, 0.22, 'triangle', times[idx]));
+    }
+
+    function speakWelcome() {
+      playCorrectSound();
+      speakText("Halo anak-anak hebat kelas 2 SD Negeri 3 Kelaten! Selamat datang di Petualangan Pola Ceria bersama Ibu Yuyun Apriyanti. Ayo pilih menu belajar atau bermain!");
+    }
+
+    function startAdventure() {
+      speakWelcome();
+      setTimeout(() => navigateTo('materi'), 400);
+    }
+
+    /* =====================================================================
+       C. FACTORY SVG ITEM POLA (GAMBAR, WARNA, SUARA, GERAK)
+    ===================================================================== */
+    const PATTERN_ITEMS = {
+      // 1. POLA GAMBAR
+      lingkaran: {
+        label: 'Lingkaran',
+        svg: `<svg width="54" height="54" viewBox="0 0 100 100"><circle cx="50" cy="50" r="38" fill="#38BDF8" stroke="#0284C7" stroke-width="6"/></svg>`
+      },
+      segitiga: {
+        label: 'Segitiga',
+        svg: `<svg width="54" height="54" viewBox="0 0 100 100"><polygon points="50,12 90,86 10,86" fill="#FACC15" stroke="#CA8A04" stroke-width="6" stroke-linejoin="round"/></svg>`
+      },
+      persegi: {
+        label: 'Persegi',
+        svg: `<svg width="54" height="54" viewBox="0 0 100 100"><rect x="16" y="16" width="68" height="68" rx="10" fill="#4ADE80" stroke="#16A34A" stroke-width="6"/></svg>`
+      },
+      bintang: {
+        label: 'Bintang',
+        svg: `<svg width="54" height="54" viewBox="0 0 100 100"><polygon points="50,8 63,36 94,40 71,61 77,92 50,76 23,92 29,61 6,40 37,36" fill="#FB923C" stroke="#EA580C" stroke-width="5" stroke-linejoin="round"/></svg>`
+      },
+      hati: {
+        label: 'Hati',
+        svg: `<svg width="54" height="54" viewBox="0 0 100 100"><path d="M50 86 C20 64 10 45 10 31 C10 18 21 10 33 10 C42 10 47 15 50 21 C53 15 58 10 67 10 C79 10 90 18 90 31 C90 45 80 64 50 86 Z" fill="#F472B6" stroke="#DB2777" stroke-width="5"/></svg>`
+      },
+
+      // 2. POLA WARNA
+      merah: {
+        label: 'Merah',
+        svg: `<svg width="56" height="56" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="#EF4444" stroke="#991B1B" stroke-width="6"/><circle cx="36" cy="34" r="9" fill="rgba(255,255,255,0.45)"/></svg>`
+      },
+      kuning: {
+        label: 'Kuning',
+        svg: `<svg width="56" height="56" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="#FACC15" stroke="#854D0E" stroke-width="6"/><circle cx="36" cy="34" r="9" fill="rgba(255,255,255,0.55)"/></svg>`
+      },
+      biru: {
+        label: 'Biru',
+        svg: `<svg width="56" height="56" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="#3B82F6" stroke="#1E40AF" stroke-width="6"/><circle cx="36" cy="34" r="9" fill="rgba(255,255,255,0.45)"/></svg>`
+      },
+      hijau: {
+        label: 'Hijau',
+        svg: `<svg width="56" height="56" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="#22C55E" stroke="#166534" stroke-width="6"/><circle cx="36" cy="34" r="9" fill="rgba(255,255,255,0.45)"/></svg>`
+      },
+      ungu: {
+        label: 'Ungu',
+        svg: `<svg width="56" height="56" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="#A855F7" stroke="#581C87" stroke-width="6"/><circle cx="36" cy="34" r="9" fill="rgba(255,255,255,0.45)"/></svg>`
+      },
+
+      // 3. POLA SUARA
+      tepuk: {
+        label: 'Tepuk',
+        sound: 'clap',
+        svg: `<svg width="56" height="56" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="44" fill="#FEF08A"/>
+          <path d="M22 26 L12 18 M50 16 L50 6 M78 26 L88 18" stroke="#EA580C" stroke-width="5" stroke-linecap="round"/>
+          <rect x="28" y="38" width="18" height="36" rx="9" transform="rotate(-15 37 56)" fill="#FDBA74" stroke="#9A3412" stroke-width="3"/>
+          <rect x="54" y="38" width="18" height="36" rx="9" transform="rotate(15 63 56)" fill="#FED7AA" stroke="#9A3412" stroke-width="3"/>
+        </svg>`
+      },
+      hentak: {
+        label: 'Hentak',
+        sound: 'stomp',
+        svg: `<svg width="56" height="56" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="44" fill="#E0F2FE"/>
+          <path d="M42 18 V48 H68 Q78 48 78 60 V68 H30 V18 Z" fill="#3B82F6" stroke="#1E3A8A" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M18 78 H82" stroke="#EA580C" stroke-width="6" stroke-linecap="round"/>
+          <path d="M24 86 L16 92 M76 86 L84 92" stroke="#EA580C" stroke-width="4" stroke-linecap="round"/>
+        </svg>`
+      },
+
+      // 4. POLA GERAK
+      berdiri: {
+        label: 'Berdiri',
+        svg: `<svg width="56" height="56" viewBox="0 0 100 100">
+          <circle cx="50" cy="20" r="12" fill="#FED7AA" stroke="#9A3412" stroke-width="3"/>
+          <rect x="38" y="34" width="24" height="32" rx="8" fill="#38BDF8" stroke="#0369A1" stroke-width="3"/>
+          <line x1="36" y1="40" x2="26" y2="62" stroke="#9A3412" stroke-width="6" stroke-linecap="round"/>
+          <line x1="64" y1="40" x2="74" y2="62" stroke="#9A3412" stroke-width="6" stroke-linecap="round"/>
+          <line x1="44" y1="66" x2="44" y2="92" stroke="#1E293B" stroke-width="7" stroke-linecap="round"/>
+          <line x1="56" y1="66" x2="56" y2="92" stroke="#1E293B" stroke-width="7" stroke-linecap="round"/>
+        </svg>`
+      },
+      duduk: {
+        label: 'Duduk',
+        svg: `<svg width="56" height="56" viewBox="0 0 100 100">
+          <rect x="22" y="56" width="32" height="34" rx="4" fill="#CBD5E1" stroke="#64748B" stroke-width="3"/>
+          <circle cx="44" cy="26" r="11" fill="#FED7AA" stroke="#9A3412" stroke-width="3"/>
+          <rect x="34" y="39" width="20" height="24" rx="7" fill="#F472B6" stroke="#BE185D" stroke-width="3"/>
+          <path d="M46 61 H70 V86" stroke="#1E293B" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>`
+      },
+      angkat_tangan: {
+        label: 'Angkat Tangan',
+        svg: `<svg width="56" height="56" viewBox="0 0 100 100">
+          <circle cx="50" cy="24" r="11" fill="#FED7AA" stroke="#9A3412" stroke-width="3"/>
+          <rect x="38" y="37" width="24" height="30" rx="8" fill="#FACC15" stroke="#CA8A04" stroke-width="3"/>
+          <path d="M38 42 L22 14 M62 42 L78 14" stroke="#9A3412" stroke-width="6" stroke-linecap="round"/>
+          <line x1="44" y1="67" x2="44" y2="92" stroke="#1E293B" stroke-width="7" stroke-linecap="round"/>
+          <line x1="56" y1="67" x2="56" y2="92" stroke="#1E293B" stroke-width="7" stroke-linecap="round"/>
+        </svg>`
+      },
+      jongkok: {
+        label: 'Jongkok',
+        svg: `<svg width="56" height="56" viewBox="0 0 100 100">
+          <circle cx="50" cy="36" r="11" fill="#FED7AA" stroke="#9A3412" stroke-width="3"/>
+          <rect x="36" y="49" width="28" height="22" rx="8" fill="#4ADE80" stroke="#16A34A" stroke-width="3"/>
+          <path d="M36 70 L28 86 H44 M64 70 L72 86 H56" stroke="#1E293B" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>`
+      },
+
+      // ITEM KOMBINASI UNTUK KREATIVITAS LKPD
+      lingkaran_merah: {
+        label: 'Lingkaran Merah',
+        svg: `<svg width="54" height="54" viewBox="0 0 100 100"><circle cx="50" cy="50" r="38" fill="#EF4444" stroke="#991B1B" stroke-width="6"/></svg>`
+      },
+      segitiga_kuning: {
+        label: 'Segitiga Kuning',
+        svg: `<svg width="54" height="54" viewBox="0 0 100 100"><polygon points="50,12 90,86 10,86" fill="#FACC15" stroke="#CA8A04" stroke-width="6"/></svg>`
+      },
+      persegi_hijau: {
+        label: 'Persegi Hijau',
+        svg: `<svg width="54" height="54" viewBox="0 0 100 100"><rect x="16" y="16" width="68" height="68" rx="10" fill="#22C55E" stroke="#166534" stroke-width="6"/></svg>`
+      },
+      bintang_ungu: {
+        label: 'Bintang Ungu',
+        svg: `<svg width="54" height="54" viewBox="0 0 100 100"><polygon points="50,8 63,36 94,40 71,61 77,92 50,76 23,92 29,61 6,40 37,36" fill="#A855F7" stroke="#581C87" stroke-width="5"/></svg>`
+      }
+    };
+
+    function renderPatternCard(key, idAttr = '', clickableSound = false) {
+      const item = PATTERN_ITEMS[key];
+      if (!item) return '';
+      const clickAttr = clickableSound && item.sound
+        ? `onclick="triggerSingleSound('${key}', this)" style="cursor:pointer;" title="Klik untuk bunyikan"`
+        : '';
+      return `
+        <div class="pattern-item" ${idAttr ? `id="${idAttr}"` : ''} ${clickAttr}>
+          ${item.svg}
+          <span class="label">${item.label}</span>
+        </div>
+      `;
+    }
+
+    function triggerSingleSound(key, el) {
+      const item = PATTERN_ITEMS[key];
+      if (!item) return;
+      if (item.sound === 'clap') playClapSound();
+      if (item.sound === 'stomp') playStompSound();
+      if (el) {
+        el.classList.remove('anim-highlight');
+        void el.offsetWidth;
+        el.classList.add('anim-highlight');
+      }
+    }
+
+    // Putar urutan pola suara secara berurutan dengan animasi highlight
+    function playSoundSequence(keys, prefixId) {
+      keys.forEach((key, idx) => {
+        setTimeout(() => {
+          const el = document.getElementById(`${prefixId}-${idx}`);
+          triggerSingleSound(key, el);
+        }, idx * 650);
+      });
+    }
+
+    // Animasi highlight berurutan untuk pola gambar/warna/gerak
+    function animateSequence(keys, prefixId) {
+      keys.forEach((key, idx) => {
+        setTimeout(() => {
+          const el = document.getElementById(`${prefixId}-${idx}`);
+          if (el) {
+            el.classList.remove('anim-highlight');
+            void el.offsetWidth;
+            el.classList.add('anim-highlight');
+          }
+          playTone(440 + idx * 70, 0.14, 'sine');
+        }, idx * 550);
+      });
+    }
+
+    /* =====================================================================
+       D. NAVIGASI, SKOR, PROGRES & EFEK KONFETI
+    ===================================================================== */
+    const MENU_SPEECH = {
+      home: "Kamu berada di menu utama. Ayo pilih petualangan belajarmu!",
+      materi: "Menu Materi. Mari belajar mengenal pengertian pola dan empat jenis pola.",
+      simulasi: "Menu Simulasi. Amati urutan pola lalu pilih jawaban untuk melanjutkannya.",
+      praktikum: "Menu Praktikum. Susun kartu bentuk, warna, suara, dan gerakan sesuai urutan pola.",
+      game: "Selamat datang di Game Detektif Pola Ceria! Pilih level dan kumpulkan bintang sebanyak-banyaknya.",
+      lkpd: "Menu Lembar Kerja Peserta Didik. Kerjakan sepuluh soal dan buat pola kreasimu sendiri.",
+      evaluasi: "Menu Evaluasi Akhir. Kerjakan sepuluh soal pilihan ganda untuk mendapatkan nilai dan sertifikat.",
+      pengembang: "Profil pengembang media pembelajaran Ibu Yuyun Apriyanti dari SD Negeri 3 Kelaten."
+    };
+
+    function navigateTo(viewId) {
+      document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
+      const target = document.getElementById(`view-${viewId}`);
+      if (target) target.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      speakText(MENU_SPEECH[viewId] || "");
+
+      if (viewId === 'materi') renderMateri();
+      if (viewId === 'simulasi') renderSimulasi();
+      if (viewId === 'praktikum') renderPraktikum();
+      if (viewId === 'game') renderGameLobby();
+      if (viewId === 'lkpd') renderLKPD();
+      if (viewId === 'evaluasi') renderEvaluasi();
+    }
+
+    function addReward(points, stars = 0) {
+      appState.totalPoints += points;
+      appState.totalStars += stars;
+      document.getElementById('totalPointsDisplay').textContent = appState.totalPoints;
+      document.getElementById('totalStarsDisplay').textContent = appState.totalStars;
+    }
+
+    function markMenuDone(menuKey) {
+      if (!appState.completedMenus[menuKey]) {
+        appState.completedMenus[menuKey] = true;
+        const badge = document.getElementById(`badge-${menuKey}`);
+        if (badge) badge.classList.add('show');
+      }
+      const total = Object.keys(appState.completedMenus).length;
+      const done = Object.values(appState.completedMenus).filter(Boolean).length;
+      const pct = Math.round((done / total) * 100);
+      document.getElementById('progressText').textContent = `${pct}%`;
+      document.getElementById('progressFill').style.width = `${pct}%`;
+    }
+
+    function spawnConfetti() {
+      const colors = ['#38BDF8', '#FACC15', '#4ADE80', '#FB923C', '#C084FC', '#F472B6'];
+      for (let i = 0; i < 36; i++) {
+        const piece = document.createElement('div');
+        piece.className = 'confetti-piece';
+        piece.style.left = Math.random() * 100 + 'vw';
+        piece.style.backgroundColor = colors[i % colors.length];
+        piece.style.animationDuration = (1.6 + Math.random() * 1.4) + 's';
+        document.body.appendChild(piece);
+        setTimeout(() => piece.remove(), 3100);
+      }
+    }
+
+    function openTeacherModal() {
+      document.getElementById('teacherModal').classList.add('open');
+    }
+
+    function closeTeacherModal() {
+      document.getElementById('teacherModal').classList.remove('open');
+    }
+
+    function syncStudentName(val) {
+      appState.studentName = val.trim();
+      const evalInput = document.getElementById('evalStudentName');
+      const lkpdInput = document.getElementById('lkpdName');
+      if (evalInput && evalInput.value !== val) evalInput.value = val;
+      if (lkpdInput && lkpdInput.value !== val) lkpdInput.value = val;
+    }
+
+    /* =====================================================================
+       E. MENU 1: MATERI PEMBELAJARAN
+    ===================================================================== */
+    const MATERI_DATA = [
+      {
+        title: "A. Pengertian Pola",
+        narration: "Apa itu pola? Pola adalah susunan gambar, warna, suara, atau gerakan yang memiliki aturan dan berulang secara teratur. Contohnya, siang berganti malam, lalu siang dan malam lagi secara berulang.",
+        text: "<strong>Pola</strong> adalah susunan gambar, warna, suara, atau gerakan yang memiliki aturan dan <strong>berulang secara teratur</strong>.",
+        example1Label: "Contoh pola dalam kehidupan sehari-hari:",
+        seq1: ['lingkaran', 'segitiga', 'lingkaran', 'segitiga'],
+        example2Label: "Pola berulang dengan 3 susunan teratur:",
+        seq2: ['merah', 'kuning', 'hijau', 'merah', 'kuning', 'hijau'],
+        isSound: false
+      },
+      {
+        title: "B. Pola Gambar",
+        narration: "Pola gambar adalah susunan bentuk gambar yang berulang secara teratur. Perhatikan contoh pertama: Lingkaran, Segitiga, Lingkaran, Segitiga. Contoh kedua: Bintang, Persegi, Bintang, Persegi.",
+        text: "<strong>Pola Gambar</strong> adalah susunan bentuk gambar yang disusun berulang mengikuti aturan tertentu.",
+        example1Label: "Contoh 1: Lingkaran - Segitiga - Lingkaran - Segitiga",
+        seq1: ['lingkaran', 'segitiga', 'lingkaran', 'segitiga'],
+        example2Label: "Contoh 2: Bintang - Persegi - Bintang - Persegi",
+        seq2: ['bintang', 'persegi', 'bintang', 'persegi'],
+        isSound: false
+      },
+      {
+        title: "C. Pola Warna",
+        narration: "Pola warna adalah susunan warna yang berulang secara teratur. Contoh pertama: Merah, Kuning, Merah, Kuning. Contoh kedua: Biru, Hijau, Ungu, Biru, Hijau, Ungu.",
+        text: "<strong>Pola Warna</strong> adalah susunan warna-warna cerah yang berulang secara teratur.",
+        example1Label: "Contoh 1: Merah - Kuning - Merah - Kuning",
+        seq1: ['merah', 'kuning', 'merah', 'kuning'],
+        example2Label: "Contoh 2: Biru - Hijau - Ungu - Biru - Hijau - Ungu",
+        seq2: ['biru', 'hijau', 'ungu', 'biru', 'hijau', 'ungu'],
+        isSound: false
+      },
+      {
+        title: "D. Pola Suara",
+        narration: "Pola suara adalah bunyi yang diulang secara teratur. Ayo klik tombol Putar Pola Suara untuk mendengarkan contohnya: Tepuk, Hentak, Tepuk, Hentak!",
+        text: "<strong>Pola Suara</strong> adalah susunan bunyi seperti tepuk tangan dan hentak kaki yang berulang secara teratur.",
+        example1Label: "Contoh 1: Tepuk - Hentak - Tepuk - Hentak",
+        seq1: ['tepuk', 'hentak', 'tepuk', 'hentak'],
+        example2Label: "Contoh 2: Tepuk - Tepuk - Hentak - Tepuk - Tepuk - Hentak",
+        seq2: ['tepuk', 'tepuk', 'hentak', 'tepuk', 'tepuk', 'hentak'],
+        isSound: true
+      },
+      {
+        title: "E. Pola Gerak",
+        narration: "Pola gerak adalah gerakan tubuh yang dilakukan secara berulang dan teratur. Contoh pertama: Berdiri, Duduk, Berdiri, Duduk. Contoh kedua: Angkat Tangan, Jongkok, Angkat Tangan, Jongkok.",
+        text: "<strong>Pola Gerak</strong> adalah susunan gerakan tubuh yang dilakukan berulang-ulang secara teratur.",
+        example1Label: "Contoh 1: Berdiri - Duduk - Berdiri - Duduk",
+        seq1: ['berdiri', 'duduk', 'berdiri', 'duduk'],
+        example2Label: "Contoh 2: Angkat Tangan - Jongkok - Angkat Tangan - Jongkok",
+        seq2: ['angkat_tangan', 'jongkok', 'angkat_tangan', 'jongkok'],
+        isSound: false
+      }
+    ];
+
+    function selectMateri(idx) {
+      appState.materiIndex = idx;
+      renderMateri();
+      speakText(MATERI_DATA[idx].narration);
+      if (idx === MATERI_DATA.length - 1) {
+        markMenuDone('materi');
+      }
+    }
+
+    function renderMateri() {
+      const idx = appState.materiIndex;
+      const data = MATERI_DATA[idx];
+      document.querySelectorAll('#materiTabs .tab-pill').forEach((btn, i) => {
+        btn.classList.toggle('active', i === idx);
+      });
+
+      const actionBtn1 = data.isSound
+        ? `<button class="btn btn-orange btn-sm" onclick='playSoundSequence(${JSON.stringify(data.seq1)}, "mat1")'>🔊 Putar Pola Suara 1</button>`
+        : `<button class="btn btn-sky btn-sm" onclick='animateSequence(${JSON.stringify(data.seq1)}, "mat1")'>✨ Lihat Urutan Pola 1</button>`;
+
+      const actionBtn2 = data.isSound
+        ? `<button class="btn btn-orange btn-sm" onclick='playSoundSequence(${JSON.stringify(data.seq2)}, "mat2")'>🔊 Putar Pola Suara 2</button>`
+        : `<button class="btn btn-sky btn-sm" onclick='animateSequence(${JSON.stringify(data.seq2)}, "mat2")'>✨ Lihat Urutan Pola 2</button>`;
+
+      document.getElementById('materiContent').innerHTML = `
+        <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px; margin-bottom:14px;">
+          <h3 style="font-size:1.55rem; font-weight:900; color:var(--purple-dark);">${data.title}</h3>
+          <button class="btn btn-yellow" onclick="speakText(MATERI_DATA[${idx}].narration)">
+            🔊 Dengarkan Kembali
+          </button>
+        </div>
+
+        <div class="materi-text">${data.text}</div>
+
+        <div style="margin-bottom:20px;">
+          <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px;">
+            <strong style="font-size:1.1rem; color:#0F172A;">${data.example1Label}</strong>
+            ${actionBtn1}
+          </div>
+          <div class="pattern-strip">
+            ${data.seq1.map((k, i) => renderPatternCard(k, `mat1-${i}`, data.isSound)).join('')}
+          </div>
+        </div>
+
+        <div style="margin-bottom:22px;">
+          <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px;">
+            <strong style="font-size:1.1rem; color:#0F172A;">${data.example2Label}</strong>
+            ${actionBtn2}
+          </div>
+          <div class="pattern-strip">
+            ${data.seq2.map((k, i) => renderPatternCard(k, `mat2-${i}`, data.isSound)).join('')}
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; border-top:3px dashed #E2E8F0; padding-top:18px;">
+          <button class="btn btn-white" ${idx === 0 ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : `onclick="selectMateri(${idx - 1})"`}>
+            ⬅️ Materi Sebelumnya
+          </button>
+          ${idx < MATERI_DATA.length - 1
+            ? `<button class="btn btn-green" onclick="selectMateri(${idx + 1})">Lanjutkan Materi ➡️</button>`
+            : `<button class="btn btn-orange" onclick="markMenuDone('materi'); navigateTo('simulasi')">Selesai Materi! Lanjut Simulasi 🚀</button>`
+          }
+        </div>
+      `;
+    }
+
+    /* =====================================================================
+       F. MENU 2: SIMULASI INTERAKTIF
+    ===================================================================== */
+    const SIMULASI_BANK = {
+      gambar: [
+        {
+          prompt: "Amati pola gambar di bawah ini! Gambar apakah yang tepat untuk mengisi tanda tanya (?)",
+          seq: ['lingkaran', 'segitiga', 'lingkaran', 'segitiga', 'lingkaran'],
+          answer: 'segitiga',
+          choices: ['lingkaran', 'segitiga', 'persegi', 'bintang']
+        },
+        {
+          prompt: "Perhatikan urutan pola gambar berikut! Lanjutkan pola setelah kotak hijau:",
+          seq: ['bintang', 'persegi', 'bintang', 'persegi'],
+          answer: 'bintang',
+          choices: ['persegi', 'lingkaran', 'bintang', 'hati']
+        }
+      ],
+      warna: [
+        {
+          prompt: "Amati pola warna berikut! Warna lingkaran apa yang muncul berikutnya?",
+          seq: ['merah', 'kuning', 'merah', 'kuning', 'merah'],
+          answer: 'kuning',
+          choices: ['merah', 'kuning', 'biru', 'hijau']
+        },
+        {
+          prompt: "Perhatikan tiga warna berulang ini: Biru, Hijau, Ungu. Apa warna setelah Hijau?",
+          seq: ['biru', 'hijau', 'ungu', 'biru', 'hijau'],
+          answer: 'ungu',
+          choices: ['biru', 'merah', 'ungu', 'kuning']
+        }
+      ],
+      suara: [
+        {
+          prompt: "Klik tombol Putar Pola Suara, dengarkan bunyinya, lalu pilih suara berikutnya!",
+          seq: ['tepuk', 'hentak', 'tepuk', 'hentak'],
+          answer: 'tepuk',
+          choices: ['tepuk', 'hentak'],
+          isSound: true
+        },
+        {
+          prompt: "Dengarkan pola suara: Tepuk, Tepuk, Hentak, Tepuk, Tepuk, ... Apa bunyi selanjutnya?",
+          seq: ['tepuk', 'tepuk', 'hentak', 'tepuk', 'tepuk'],
+          answer: 'hentak',
+          choices: ['tepuk', 'hentak'],
+          isSound: true
+        }
+      ],
+      gerak: [
+        {
+          prompt: "Amati gerakan anak berikut: Berdiri, Duduk, Berdiri, Duduk. Gerakan apa selanjutnya?",
+          seq: ['berdiri', 'duduk', 'berdiri', 'duduk'],
+          answer: 'berdiri',
+          choices: ['berdiri', 'duduk', 'jongkok', 'angkat_tangan']
+        },
+        {
+          prompt: "Lihat gerakan: Angkat Tangan, Jongkok, Angkat Tangan, ... Apa gerakan berikutnya?",
+          seq: ['angkat_tangan', 'jongkok', 'angkat_tangan'],
+          answer: 'jongkok',
+          choices: ['berdiri', 'angkat_tangan', 'jongkok', 'duduk']
+        }
+      ]
+    };
+
+    function selectSimulasiType(type) {
+      appState.simulasiType = type;
+      appState.simulasiStep = 0;
+      renderSimulasi();
+    }
+
+    function renderSimulasi() {
+      const types = ['gambar', 'warna', 'suara', 'gerak'];
+      document.querySelectorAll('#simulasiTabs .tab-pill').forEach((btn, i) => {
+        btn.classList.toggle('active', types[i] === appState.simulasiType);
+      });
+
+      const list = SIMULASI_BANK[appState.simulasiType];
+      const item = list[appState.simulasiStep];
+
+      document.getElementById('simulasiWorkspace').innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+          <span style="background:var(--green-light); color:#065F46; padding:6px 14px; border-radius:999px; font-weight:900;">
+            Latihan ${appState.simulasiStep + 1} dari ${list.length}
+          </span>
+          ${item.isSound
+            ? `<button class="btn btn-orange" onclick='playSoundSequence(${JSON.stringify(item.seq)}, "sim")'>🔊 Putar Pola Suara</button>`
+            : `<button class="btn btn-sky btn-sm" onclick='animateSequence(${JSON.stringify(item.seq)}, "sim")'>✨ Putar Urutan</button>`
+          }
+        </div>
+
+        <p style="font-size:1.2rem; font-weight:800; color:var(--text-main); margin-bottom:10px;">
+          ${item.prompt}
+        </p>
+
+        <div class="pattern-strip">
+          ${item.seq.map((k, idx) => renderPatternCard(k, `sim-${idx}`, item.isSound)).join('')}
+          <div class="pattern-slot" id="simSlot">?</div>
+        </div>
+
+        <p style="text-align:center; font-weight:800; color:var(--text-muted);">👇 Klik jawaban yang tepat di bawah ini:</p>
+        <div class="choice-grid">
+          ${item.choices.map(c => `
+            <button class="choice-btn" onclick="checkSimulasiAnswer('${c}')">
+              ${PATTERN_ITEMS[c].svg}
+              <span>${PATTERN_ITEMS[c].label}</span>
+            </button>
+          `).join('')}
+        </div>
+
+        <div id="simFeedback" class="feedback-banner"></div>
+
+        <div style="display:flex; justify-content:flex-end; margin-top:16px;">
+          ${appState.simulasiStep < list.length - 1
+            ? `<button class="btn btn-sky" onclick="appState.simulasiStep++; renderSimulasi();">Soal Berikutnya ➡️</button>`
+            : `<button class="btn btn-green" onclick="nextSimulasiTab()">Lanjut Jenis Pola Berikutnya ➡️</button>`
+          }
+        </div>
+      `;
+
+      if (item.isSound) {
+        setTimeout(() => playSoundSequence(item.seq, 'sim'), 350);
+      }
+    }
+
+    function checkSimulasiAnswer(chosen) {
+      const item = SIMULASI_BANK[appState.simulasiType][appState.simulasiStep];
+      const slot = document.getElementById('simSlot');
+      const fb = document.getElementById('simFeedback');
+
+      if (chosen === item.answer) {
+        slot.classList.add('filled', 'anim-pop');
+        slot.innerHTML = `${PATTERN_ITEMS[chosen].svg}<span style="font-size:0.8rem;color:#0F172A;">${PATTERN_ITEMS[chosen].label}</span>`;
+        fb.className = 'feedback-banner success anim-pop';
+        fb.innerHTML = '🎉 Hebat! Jawabanmu benar!';
+        playCorrectSound();
+        speakText("Hebat! Jawabanmu benar!");
+        addReward(5, 1);
+        markMenuDone('simulasi');
+      } else {
+        slot.classList.remove('anim-shake');
+        void slot.offsetWidth;
+        slot.classList.add('anim-shake');
+        fb.className = 'feedback-banner error anim-shake';
+        fb.innerHTML = '🤔 Ayo coba lagi. Perhatikan polanya!';
+        playWrongSound();
+        speakText("Ayo coba lagi. Perhatikan polanya!");
+      }
+    }
+
+    function nextSimulasiTab() {
+      const types = ['gambar', 'warna', 'suara', 'gerak'];
+      const nextIdx = (types.indexOf(appState.simulasiType) + 1) % types.length;
+      selectSimulasiType(types[nextIdx]);
+    }
+
+    /* =====================================================================
+       G. MENU 3: PRAKTIKUM INTERAKTIF (DRAG & DROP + KLIK SUSUN)
+    ===================================================================== */
+    const PRAKTIKUM_DATA = [
+      {
+        title: "Aktivitas 1: Susun Pola Gambar",
+        instruction: "Susun bentuk Lingkaran, Segitiga, Persegi, dan Bintang untuk melengkapi kotak yang kosong!",
+        template: ['lingkaran', 'segitiga', null, 'bintang', 'lingkaran', null, 'persegi', 'bintang'],
+        solutions: ['persegi', 'segitiga'],
+        palette: ['lingkaran', 'segitiga', 'persegi', 'bintang'],
+        isSound: false
+      },
+      {
+        title: "Aktivitas 2: Susun Pola Warna",
+        instruction: "Lengkapi urutan bola warna Merah, Kuning, Biru, dan Hijau sesuai polanya!",
+        template: ['merah', 'kuning', 'biru', null, 'merah', null, 'biru', 'hijau'],
+        solutions: ['hijau', 'kuning'],
+        palette: ['merah', 'kuning', 'biru', 'hijau'],
+        isSound: false
+      },
+      {
+        title: "Aktivitas 3: Susun Pola Suara",
+        instruction: "Dengarkan bunyi pola suara: Tepuk, Hentak, Tepuk, Hentak. Lalu susun 2 kotak lanjutannya!",
+        soundDemo: ['tepuk', 'hentak', 'tepuk', 'hentak'],
+        template: ['tepuk', 'hentak', 'tepuk', 'hentak', null, null],
+        solutions: ['tepuk', 'hentak'],
+        palette: ['tepuk', 'hentak'],
+        isSound: true
+      },
+      {
+        title: "Aktivitas 4: Susun Pola Gerak",
+        instruction: "Amati gerakan anak: Berdiri, Duduk, Angkat Tangan. Lengkapi gerakan yang masih kosong!",
+        template: ['berdiri', 'duduk', 'angkat_tangan', 'berdiri', null, null],
+        solutions: ['duduk', 'angkat_tangan'],
+        palette: ['berdiri', 'duduk', 'angkat_tangan', 'jongkok'],
+        isSound: false
+      }
+    ];
+
+    function selectPraktikum(idx) {
+      appState.praktikumIndex = idx;
+      const blankCount = PRAKTIKUM_DATA[idx].solutions.length;
+      appState.praktikumSlots = Array(blankCount).fill(null);
+      renderPraktikum();
+    }
+
+    function renderPraktikum() {
+      const idx = appState.praktikumIndex;
+      const act = PRAKTIKUM_DATA[idx];
+      document.querySelectorAll('#praktikumTabs .tab-pill').forEach((btn, i) => {
+        btn.classList.toggle('active', i === idx);
+      });
+
+      let blankCounter = 0;
+      const stripHtml = act.template.map((itemKey, i) => {
+        if (itemKey !== null) {
+          return renderPatternCard(itemKey, `prak-${i}`, act.isSound);
+        } else {
+          const sIdx = blankCounter++;
+          const filledKey = appState.praktikumSlots[sIdx];
+          if (filledKey) {
+            return `
+              <div class="pattern-slot filled"
+                   ondragover="event.preventDefault(); this.classList.add('drag-over');"
+                   ondragleave="this.classList.remove('drag-over');"
+                   ondrop="handleDropSlot(event, ${sIdx})"
+                   onclick="clearPraktikumSlot(${sIdx})"
+                   title="Klik untuk menghapus atau seret kartu baru">
+                ${PATTERN_ITEMS[filledKey].svg}
+                <span style="font-size:0.78rem; color:#0F172A;">${PATTERN_ITEMS[filledKey].label}</span>
+              </div>
+            `;
+          }
+          return `
+            <div class="pattern-slot"
+                 ondragover="event.preventDefault(); this.classList.add('drag-over');"
+                 ondragleave="this.classList.remove('drag-over');"
+                 ondrop="handleDropSlot(event, ${sIdx})">
+              ?
+            </div>
+          `;
+        }
+      }).join('');
+
+      document.getElementById('praktikumWorkspace').innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:10px;">
+          <h3 style="font-size:1.45rem; font-weight:900; color:var(--orange-dark);">${act.title}</h3>
+          ${act.isSound
+            ? `<button class="btn btn-orange" onclick='playSoundSequence(${JSON.stringify(act.soundDemo)}, "prak")'>🔊 Dengarkan Pola Suara</button>`
+            : ''
+          }
+        </div>
+        <p style="font-size:1.1rem; font-weight:700; margin-bottom:12px;">${act.instruction}</p>
+
+        <div class="pattern-strip">${stripHtml}</div>
+
+        <p style="text-align:center; font-weight:800; color:var(--text-muted);">
+          🖐️ Seret (Drag) kartu ke kotak kosong ATAU langsung Klik kartu di bawah ini:
+        </p>
+        <div class="choice-grid">
+          ${act.palette.map(pKey => `
+            <button class="choice-btn"
+                    draggable="true"
+                    ondragstart="event.dataTransfer.setData('text/plain', '${pKey}')"
+                    onclick="fillNextPraktikumSlot('${pKey}')">
+              ${PATTERN_ITEMS[pKey].svg}
+              <span>${PATTERN_ITEMS[pKey].label}</span>
+            </button>
+          `).join('')}
+        </div>
+
+        <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:14px; margin-top:22px;">
+          <button class="btn btn-green btn-lg" onclick="checkPraktikumAnswer()">✅ Periksa Jawaban</button>
+          <button class="btn btn-white btn-lg" onclick="selectPraktikum(${idx})">🔄 Ulangi</button>
+        </div>
+
+        <div id="praktikumFeedback" class="feedback-banner"></div>
+      `;
+    }
+
+    function fillNextPraktikumSlot(key) {
+      if (PATTERN_ITEMS[key]?.sound === 'clap') playClapSound();
+      if (PATTERN_ITEMS[key]?.sound === 'stomp') playStompSound();
+      const emptyIdx = appState.praktikumSlots.findIndex(v => v === null);
+      if (emptyIdx !== -1) {
+        appState.praktikumSlots[emptyIdx] = key;
+        renderPraktikum();
+      }
+    }
+
+    function handleDropSlot(event, slotIdx) {
+      event.preventDefault();
+      const key = event.dataTransfer.getData('text/plain');
+      if (key && PATTERN_ITEMS[key]) {
+        appState.praktikumSlots[slotIdx] = key;
+        renderPraktikum();
+      }
+    }
+
+    function clearPraktikumSlot(slotIdx) {
+      appState.praktikumSlots[slotIdx] = null;
+      renderPraktikum();
+    }
+
+    function checkPraktikumAnswer() {
+      const act = PRAKTIKUM_DATA[appState.praktikumIndex];
+      const fb = document.getElementById('praktikumFeedback');
+
+      if (appState.praktikumSlots.includes(null)) {
+        fb.className = 'feedback-banner error anim-shake';
+        fb.innerHTML = '⚠️ Masih ada kotak kosong! Ayo isi semua kotak tanda tanya (?) terlebih dahulu.';
+        playWrongSound();
+        speakText("Masih ada kotak kosong. Ayo isi semua kotak terlebih dahulu.");
+        return;
+      }
+
+      const isAllCorrect = act.solutions.every((sol, i) => appState.praktikumSlots[i] === sol);
+      if (isAllCorrect) {
+        fb.className = 'feedback-banner success anim-pop';
+        fb.innerHTML = '🌟 Luar biasa! Semua susunan polamu benar sekali!';
+        playCorrectSound();
+        spawnConfetti();
+        speakText("Luar biasa! Semua susunan polamu benar sekali!");
+        addReward(15, 2);
+        markMenuDone('praktikum');
+      } else {
+        fb.className = 'feedback-banner error anim-shake';
+        fb.innerHTML = '🤔 Susunannya belum tepat. Klik kotak yang salah untuk menggantinya, lalu periksa lagi!';
+        playWrongSound();
+        speakText("Susunannya belum tepat. Ayo perhatikan kembali polanya dan coba lagi!");
+      }
+    }
+
+    /* =====================================================================
+       H. MENU 4: GAME DETEKTIF POLA CERIA (3 LEVEL x 5 SOAL)
+    ===================================================================== */
+    const GAME_LEVELS = {
+      1: {
+        name: "Level 1: Petualangan Gambar",
+        desc: "Tebak gambar yang tepat untuk melengkapi pola bentuk!",
+        questions: [
+          { seq: ['lingkaran', 'segitiga', 'lingkaran', 'segitiga'], answer: 'lingkaran', options: ['lingkaran', 'segitiga', 'persegi', 'bintang'] },
+          { seq: ['persegi', 'bintang', 'persegi', 'bintang'], answer: 'persegi', options: ['bintang', 'persegi', 'lingkaran', 'hati'] },
+          { seq: ['hati', 'lingkaran', 'hati', 'lingkaran'], answer: 'hati', options: ['segitiga', 'persegi', 'hati', 'bintang'] },
+          { seq: ['segitiga', 'segitiga', 'lingkaran', 'segitiga', 'segitiga'], answer: 'lingkaran', options: ['segitiga', 'lingkaran', 'persegi', 'bintang'] },
+          { seq: ['lingkaran', 'persegi', 'bintang', 'lingkaran', 'persegi'], answer: 'bintang', options: ['lingkaran', 'persegi', 'bintang', 'hati'] }
+        ]
+      },
+      2: {
+        name: "Level 2: Petualangan Warna",
+        desc: "Pilih lingkaran warna berikutnya sesuai aturan pola!",
+        questions: [
+          { seq: ['merah', 'biru', 'merah', 'biru'], answer: 'merah', options: ['merah', 'biru', 'kuning', 'hijau'] },
+          { seq: ['kuning', 'hijau', 'kuning', 'hijau'], answer: 'kuning', options: ['hijau', 'kuning', 'ungu', 'merah'] },
+          { seq: ['ungu', 'merah', 'ungu', 'merah'], answer: 'ungu', options: ['merah', 'biru', 'ungu', 'kuning'] },
+          { seq: ['merah', 'kuning', 'hijau', 'merah', 'kuning'], answer: 'hijau', options: ['merah', 'kuning', 'hijau', 'biru'] },
+          { seq: ['biru', 'biru', 'kuning', 'biru', 'biru'], answer: 'kuning', options: ['biru', 'kuning', 'ungu', 'hijau'] }
+        ]
+      },
+      3: {
+        name: "Level 3: Petualangan Suara & Gerak",
+        desc: "Dengarkan bunyi atau amati gerakan anak lalu tebak pola berikutnya!",
+        questions: [
+          { seq: ['tepuk', 'hentak', 'tepuk', 'hentak'], answer: 'tepuk', options: ['tepuk', 'hentak'], isSound: true },
+          { seq: ['berdiri', 'duduk', 'berdiri', 'duduk'], answer: 'berdiri', options: ['berdiri', 'duduk', 'jongkok', 'angkat_tangan'] },
+          { seq: ['hentak', 'hentak', 'tepuk', 'hentak', 'hentak'], answer: 'tepuk', options: ['tepuk', 'hentak'], isSound: true },
+          { seq: ['angkat_tangan', 'jongkok', 'angkat_tangan', 'jongkok'], answer: 'angkat_tangan', options: ['angkat_tangan', 'jongkok', 'berdiri', 'duduk'] },
+          { seq: ['tepuk', 'hentak', 'hentak', 'tepuk', 'hentak'], answer: 'hentak', options: ['tepuk', 'hentak'], isSound: true }
+        ]
+      }
+    };
+
+    function renderGameLobby() {
+      appState.game.playing = false;
+      const g = appState.game;
+      document.getElementById('gameWorkspace').innerHTML = `
+        <div class="card-box" style="background:linear-gradient(135deg,#FFFBEB,#FEF3C7); border-color:var(--yellow-dark); text-align:center;">
+          <h3 style="font-size:1.7rem; font-weight:900; color:#92400E; margin-bottom:6px;">🕵️‍♂️ Papan Misi Detektif Pola Ceria</h3>
+          <p style="font-weight:700; color:#78350F; font-size:1.05rem;">
+            Setiap level memiliki 5 misi. Tiap jawaban benar bernilai <strong>10 poin</strong>! Ayo selesaikan semua level!
+          </p>
+        </div>
+
+        <div class="level-cards">
+          ${[1, 2, 3].map(lvl => {
+            const info = GAME_LEVELS[lvl];
+            const stars = g.levelStars[lvl - 1];
+            return `
+              <div class="level-card">
+                <div style="font-size:2rem; margin-bottom:8px;">
+                  ${'⭐'.repeat(stars)}${'☆'.repeat(3 - stars)}
+                </div>
+                <h4 style="font-size:1.3rem; font-weight:900; color:var(--text-main); margin-bottom:6px;">${info.name}</h4>
+                <p style="font-weight:700; color:var(--text-muted); margin-bottom:16px;">${info.desc}</p>
+                <button class="btn btn-orange" onclick="startGameLevel(${lvl})">▶️ Mainkan Level ${lvl}</button>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+
+    function startGameLevel(lvl) {
+      appState.game.level = lvl;
+      appState.game.qIndex = 0;
+      appState.game.score = 0;
+      appState.game.playing = true;
+      renderGameQuestion();
+    }
+
+    function renderGameQuestion() {
+      const g = appState.game;
+      const lvlData = GAME_LEVELS[g.level];
+      const q = lvlData.questions[g.qIndex];
+
+      document.getElementById('gameWorkspace').innerHTML = `
+        <div class="game-hud">
+          <span>🎯 ${lvlData.name}</span>
+          <span>Soal: ${g.qIndex + 1} / 5</span>
+          <span>🏅 Skor Level: ${g.score} Poin</span>
+          <button class="btn btn-white btn-sm" onclick="renderGameLobby()">Pilih Level</button>
+        </div>
+
+        <div class="card-box">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+            <h3 style="font-size:1.3rem; font-weight:900;">Lengkapi pola detektif berikut ini:</h3>
+            ${q.isSound
+              ? `<button class="btn btn-orange" onclick='playSoundSequence(${JSON.stringify(q.seq)}, "gm")'>🔊 Putar Suara Petunjuk</button>`
+              : ''
+            }
+          </div>
+
+          <div class="pattern-strip">
+            ${q.seq.map((k, i) => renderPatternCard(k, `gm-${i}`, q.isSound)).join('')}
+            <div class="pattern-slot" id="gameSlot">?</div>
+          </div>
+
+          <div class="choice-grid">
+            ${q.options.map(opt => `
+              <button class="choice-btn" onclick="submitGameChoice('${opt}')">
+                ${PATTERN_ITEMS[opt].svg}
+                <span>${PATTERN_ITEMS[opt].label}</span>
+              </button>
+            `).join('')}
+          </div>
+
+          <div id="gameFeedback" class="feedback-banner"></div>
+        </div>
+      `;
+
+      if (q.isSound) {
+        setTimeout(() => playSoundSequence(q.seq, 'gm'), 350);
+      }
+    }
+
+    let gameLock = false;
+    function submitGameChoice(opt) {
+      if (gameLock) return;
+      const g = appState.game;
+      const lvlData = GAME_LEVELS[g.level];
+      const q = lvlData.questions[g.qIndex];
+      const fb = document.getElementById('gameFeedback');
+      const slot = document.getElementById('gameSlot');
+
+      if (opt === q.answer) {
+        gameLock = true;
+        g.score += 10;
+        addReward(10, 0);
+        slot.classList.add('filled', 'anim-pop');
+        slot.innerHTML = `${PATTERN_ITEMS[opt].svg}<span style="font-size:0.8rem;">${PATTERN_ITEMS[opt].label}</span>`;
+        fb.className = 'feedback-banner success anim-pop';
+        fb.innerHTML = '🎉 Hebat! Jawabanmu benar! (+10 Poin)';
+        playCorrectSound();
+        speakText("Hebat! Jawabanmu benar!");
+
+        setTimeout(() => {
+          gameLock = false;
+          if (g.qIndex < lvlData.questions.length - 1) {
+            g.qIndex++;
+            renderGameQuestion();
+          } else {
+            finishGameLevel();
+          }
+        }, 1150);
+      } else {
+        fb.className = 'feedback-banner error anim-shake';
+        fb.innerHTML = '🔍 Ayo coba lagi, Detektif! Perhatikan polanya!';
+        playWrongSound();
+        speakText("Ayo coba lagi. Perhatikan polanya!");
+      }
+    }
+
+    function finishGameLevel() {
+      const g = appState.game;
+      const earnedStars = g.score >= 50 ? 3 : (g.score >= 30 ? 2 : 1);
+      if (earnedStars > g.levelStars[g.level - 1]) {
+        const diff = earnedStars - g.levelStars[g.level - 1];
+        g.levelStars[g.level - 1] = earnedStars;
+        addReward(0, diff);
+      }
+      markMenuDone('game');
+      playVictorySound();
+      spawnConfetti();
+      speakText(`Selamat! Kamu berhasil menyelesaikan level ${g.level} dengan skor ${g.score} poin!`);
+
+      document.getElementById('gameWorkspace').innerHTML = `
+        <div class="card-box" style="text-align:center; border-color:var(--green);">
+          <div style="font-size:3.2rem; margin-bottom:8px;">${'⭐'.repeat(earnedStars)}</div>
+          <h3 style="font-size:1.9rem; font-weight:900; color:var(--green-dark); margin-bottom:8px;">
+            Misi ${GAME_LEVELS[g.level].name} Selesai!
+          </h3>
+          <p style="font-size:1.35rem; font-weight:900; margin-bottom:10px;">
+            Skor Akhir Level: <span style="color:var(--orange-dark);">${g.score} / 50 Poin</span>
+          </p>
+          <p style="font-size:1.1rem; font-weight:700; color:var(--text-muted); margin-bottom:22px;">
+            “Kamu detektif pola yang cerdas dan teliti! Terus semangat berpetualang!”
+          </p>
+          <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:14px;">
+            <button class="btn btn-white" onclick="startGameLevel(${g.level})">🔄 Main Ulang Level ${g.level}</button>
+            ${g.level < 3
+              ? `<button class="btn btn-green btn-lg" onclick="startGameLevel(${g.level + 1})">🚀 Lanjut ke Level ${g.level + 1}</button>`
+              : `<button class="btn btn-purple btn-lg" onclick="renderGameLobby()">🏆 Lihat Semua Bintang Level</button>`
+            }
+          </div>
+        </div>
+      `;
+    }
+
+    /* =====================================================================
+       I. MENU 5: LKPD DIGITAL & CETAK (10 SOAL + KREATIVITAS)
+    ===================================================================== */
+    const LKPD_QUESTIONS = [
+      // 3 Soal Pola Gambar
+      { id: 1, type: 'Pola Gambar', text: '1. Lanjutkan urutan pola gambar berikut: Lingkaran, Segitiga, Lingkaran, Segitiga, ...', seq: ['lingkaran', 'segitiga', 'lingkaran', 'segitiga'], options: ['lingkaran', 'segitiga', 'persegi'], answer: 'lingkaran' },
+      { id: 2, type: 'Pola Gambar', text: '2. Gambar yang tepat untuk melengkapi susunan ini adalah...', seq: ['persegi', 'bintang', 'persegi', 'bintang'], options: ['bintang', 'persegi', 'hati'], answer: 'persegi' },
+      { id: 3, type: 'Pola Gambar', text: '3. Amati polanya: Hati, Hati, Lingkaran, Hati, Hati, ...', seq: ['hati', 'hati', 'lingkaran', 'hati', 'hati'], options: ['hati', 'lingkaran', 'segitiga'], answer: 'lingkaran' },
+      // 3 Soal Pola Warna
+      { id: 4, type: 'Pola Warna', text: '4. Warna apa yang muncul setelah Merah? Merah, Kuning, Merah, Kuning, Merah, ...', seq: ['merah', 'kuning', 'merah', 'kuning', 'merah'], options: ['merah', 'kuning', 'biru'], answer: 'kuning' },
+      { id: 5, type: 'Pola Warna', text: '5. Lanjutkan pola warna berikut: Biru, Hijau, Biru, Hijau, ...', seq: ['biru', 'hijau', 'biru', 'hijau'], options: ['hijau', 'ungu', 'biru'], answer: 'biru' },
+      { id: 6, type: 'Pola Warna', text: '6. Perhatikan pola 3 warna: Merah, Kuning, Hijau, Merah, Kuning, ...', seq: ['merah', 'kuning', 'hijau', 'merah', 'kuning'], options: ['hijau', 'merah', 'ungu'], answer: 'hijau' },
+      // 2 Soal Pola Suara
+      { id: 7, type: 'Pola Suara', text: '7. Dengarkan atau amati pola suara: Tepuk, Hentak, Tepuk, Hentak, ...', seq: ['tepuk', 'hentak', 'tepuk', 'hentak'], options: ['tepuk', 'hentak'], answer: 'tepuk', isSound: true },
+      { id: 8, type: 'Pola Suara', text: '8. Apa bunyi setelah Tepuk kedua? Tepuk, Tepuk, Hentak, Tepuk, Tepuk, ...', seq: ['tepuk', 'tepuk', 'hentak', 'tepuk', 'tepuk'], options: ['tepuk', 'hentak'], answer: 'hentak', isSound: true },
+      // 2 Soal Pola Gerak
+      { id: 9, type: 'Pola Gerak', text: '9. Gerakan selanjutnya adalah: Berdiri, Duduk, Berdiri, Duduk, ...', seq: ['berdiri', 'duduk', 'berdiri', 'duduk'], options: ['berdiri', 'duduk', 'jongkok'], answer: 'berdiri' },
+      { id: 10, type: 'Pola Gerak', text: '10. Lanjutkan pola gerak anak: Angkat Tangan, Jongkok, Angkat Tangan, ...', seq: ['angkat_tangan', 'jongkok', 'angkat_tangan'], options: ['angkat_tangan', 'jongkok', 'berdiri'], answer: 'jongkok' }
+    ];
+
+    function renderLKPD() {
+      const dateInput = document.getElementById('lkpdDate');
+      if (dateInput && !dateInput.value) {
+        dateInput.value = new Date().toISOString().split('T')[0];
+      }
+      if (appState.studentName) {
+        document.getElementById('lkpdName').value = appState.studentName;
+      }
+
+      const container = document.getElementById('lkpdQuestionsContainer');
+      container.innerHTML = LKPD_QUESTIONS.map(q => {
+        const picked = appState.lkpdAnswers[q.id];
+        return `
+          <div class="lkpd-question-card" id="lkpd-q-${q.id}">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+              <span style="background:#E0F2FE; color:#0369A1; padding:3px 10px; border-radius:999px; font-size:0.82rem; font-weight:900;">
+                ${q.type}
+              </span>
+              ${q.isSound
+                ? `<button class="btn btn-orange btn-sm no-print" onclick='playSoundSequence(${JSON.stringify(q.seq)}, "lkpd-${q.id}")'>🔊 Putar Suara</button>`
+                : ''
+              }
+            </div>
+            <p style="font-size:1.08rem; font-weight:800; margin:8px 0;">${q.text}</p>
+            <div class="pattern-strip" style="padding:12px; margin:8px 0;">
+              ${q.seq.map((k, i) => renderPatternCard(k, `lkpd-${q.id}-${i}`, q.isSound)).join('')}
+              <div class="pattern-slot" style="width:76px; height:88px; font-size:1.5rem;">?</div>
+            </div>
+            <div class="lkpd-options">
+              ${q.options.map(opt => `
+                <button class="lkpd-opt-btn ${picked === opt ? 'picked' : ''}"
+                        id="lkpd-opt-${q.id}-${opt}"
+                        onclick="pickLKPDAnswer(${q.id}, '${opt}')">
+                  <span style="display:inline-flex; width:34px; height:34px;">${PATTERN_ITEMS[opt].svg}</span>
+                  <span>${PATTERN_ITEMS[opt].label}</span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      renderCreativeBoard();
+    }
+
+    function pickLKPDAnswer(qId, opt) {
+      appState.lkpdAnswers[qId] = opt;
+      renderLKPD();
+    }
+
+    function addCreativeItem(key) {
+      if (appState.creativeItems.length >= 12) return;
+      appState.creativeItems.push(key);
+      playTone(520 + appState.creativeItems.length * 30, 0.12, 'sine');
+      renderCreativeBoard();
+    }
+
+    function clearCreativeBoard() {
+      appState.creativeItems = [];
+      renderCreativeBoard();
+    }
+
+    function renderCreativeBoard() {
+      const board = document.getElementById('creativeBoard');
+      if (!board) return;
+      if (appState.creativeItems.length === 0) {
+        board.innerHTML = `<span style="color:#94A3B8; font-weight:800;">Susunan pola kreasimu akan tampil di sini...</span>`;
+      } else {
+        board.innerHTML = appState.creativeItems.map(k => renderPatternCard(k)).join('');
+      }
+    }
+
+    function gradeLKPD() {
+      let correctCount = 0;
+      LKPD_QUESTIONS.forEach(q => {
+        const picked = appState.lkpdAnswers[q.id];
+        q.options.forEach(opt => {
+          const btn = document.getElementById(`lkpd-opt-${q.id}-${opt}`);
+          if (!btn) return;
+          btn.classList.remove('correct-ans', 'wrong-ans');
+          if (opt === q.answer) btn.classList.add('correct-ans');
+          else if (opt === picked && picked !== q.answer) btn.classList.add('wrong-ans');
+        });
+        if (picked === q.answer) correctCount++;
+      });
+
+      const score = correctCount * 10;
+      const resBox = document.getElementById('lkpdResultBox');
+      resBox.className = 'feedback-banner success anim-pop';
+      resBox.innerHTML = `📝 Hasil LKPD Kamu: Benar <strong>${correctCount} dari 10</strong> soal (Nilai: <strong>${score}</strong>)! ${appState.creativeItems.length >= 4 ? '🎨 Pola kreasimu juga sangat bagus!' : ''}`;
+      playCorrectSound();
+      speakText(`Hasil L K P D kamu sudah diperiksa. Kamu menjawab benar ${correctCount} dari sepuluh soal dengan nilai ${score}.`);
+      markMenuDone('lkpd');
+      addReward(15, 2);
+    }
+
+    function resetLKPD() {
+      appState.lkpdAnswers = {};
+      appState.creativeItems = [];
+      document.getElementById('lkpdResultBox').className = 'feedback-banner';
+      renderLKPD();
+    }
+
+    /* =====================================================================
+       J. MENU 6: EVALUASI AKHIR (10 SOAL PG, NILAI, PEMBAHASAN & SERTIFIKAT)
+    ===================================================================== */
+    const EVAL_QUESTIONS = [
+      {
+        q: "Susunan gambar, warna, suara, atau gerakan yang memiliki aturan dan berulang secara teratur disebut ....",
+        seq: ['lingkaran', 'segitiga', 'lingkaran', 'segitiga'],
+        options: ["Pola", "Ukuran", "Berat", "Panjang"],
+        answer: 0,
+        explanation: "Pola adalah susunan benda, gambar, warna, suara, atau gerakan yang berulang secara teratur."
+      },
+      {
+        q: "Perhatikan pola gambar: Lingkaran, Segitiga, Lingkaran, Segitiga, ... Gambar berikutnya adalah ....",
+        seq: ['lingkaran', 'segitiga', 'lingkaran', 'segitiga'],
+        options: ["Persegi", "Bintang", "Lingkaran", "Hati"],
+        answer: 2,
+        explanation: "Aturan polanya adalah Lingkaran lalu Segitiga secara bergantian, sehingga setelah Segitiga adalah Lingkaran."
+      },
+      {
+        q: "Amati susunan bentuk berikut: Persegi, Bintang, Persegi, Bintang, Persegi, ... Bentuk selanjutnya adalah ....",
+        seq: ['persegi', 'bintang', 'persegi', 'bintang', 'persegi'],
+        options: ["Persegi", "Bintang", "Segitiga", "Lingkaran"],
+        answer: 1,
+        explanation: "Setelah Persegi selalu diikuti Bintang."
+      },
+      {
+        q: "Pola warna lampu hias: Merah, Kuning, Merah, Kuning, ... Warna lampu berikutnya adalah ....",
+        seq: ['merah', 'kuning', 'merah', 'kuning'],
+        options: ["Hijau", "Biru", "Merah", "Ungu"],
+        answer: 2,
+        explanation: "Polanya berulang setiap 2 warna yaitu Merah dan Kuning, maka setelah Kuning kembali ke Merah."
+      },
+      {
+        q: "Perhatikan urutan warna: Biru, Hijau, Ungu, Biru, Hijau, ... Warna berikutnya adalah ....",
+        seq: ['biru', 'hijau', 'ungu', 'biru', 'hijau'],
+        options: ["Biru", "Merah", "Kuning", "Ungu"],
+        answer: 3,
+        explanation: "Pola berulang 3 warna: Biru - Hijau - Ungu. Setelah Hijau adalah Ungu."
+      },
+      {
+        q: "Sari membuat pola suara: Tepuk, Hentak, Tepuk, Hentak, ... Bunyi selanjutnya adalah ....",
+        seq: ['tepuk', 'hentak', 'tepuk', 'hentak'],
+        options: ["Tepuk", "Hentak", "Diam", "Teriak"],
+        answer: 0,
+        explanation: "Pola suaranya bergantian antara Tepuk dan Hentak, jadi setelah Hentak adalah Tepuk."
+      },
+      {
+        q: "Budi bertepuk tangan dan menghentakkan kaki: Tepuk, Tepuk, Hentak, Tepuk, Tepuk, ... Gerakan bunyi selanjutnya adalah ....",
+        seq: ['tepuk', 'tepuk', 'hentak', 'tepuk', 'tepuk'],
+        options: ["Tepuk", "Hentak", "Lompat", "Duduk"],
+        answer: 1,
+        explanation: "Aturan polanya adalah dua kali Tepuk diikuti satu kali Hentak."
+      },
+      {
+        q: "Anak-anak kelas 2 melakukan pola gerak senam: Berdiri, Duduk, Berdiri, Duduk, ... Gerakan berikutnya adalah ....",
+        seq: ['berdiri', 'duduk', 'berdiri', 'duduk'],
+        options: ["Jongkok", "Tidur", "Berdiri", "Lari"],
+        answer: 2,
+        explanation: "Gerakannya berulang Berdiri lalu Duduk, sehingga setelah Duduk kembali Berdiri."
+      },
+      {
+        q: "Amati urutan gerakan: Angkat Tangan, Jongkok, Angkat Tangan, ... Gerakan selanjutnya adalah ....",
+        seq: ['angkat_tangan', 'jongkok', 'angkat_tangan'],
+        options: ["Angkat Tangan", "Berdiri", "Jongkok", "Duduk"],
+        answer: 2,
+        explanation: "Setelah Angkat Tangan selalu diikuti gerakan Jongkok."
+      },
+      {
+        q: "Perhatikan pola 3 bentuk berikut: Lingkaran, Persegi, Bintang, Lingkaran, Persegi, ... Bentuk untuk melengkapinya adalah ....",
+        seq: ['lingkaran', 'persegi', 'bintang', 'lingkaran', 'persegi'],
+        options: ["Lingkaran", "Segitiga", "Hati", "Bintang"],
+        answer: 3,
+        explanation: "Susunan 3 bentuk berulang: Lingkaran, Persegi, Bintang. Maka setelah Persegi adalah Bintang."
+      }
+    ];
+
+    function renderEvaluasi() {
+      const ev = appState.eval;
+      const ws = document.getElementById('evaluasiWorkspace');
+
+      if (!ev.started && !ev.submitted) {
+        ws.innerHTML = `
+          <div class="card-box" style="max-width:650px; margin:0 auto; text-align:center;">
+            <span style="font-size:3.5rem;">🎓</span>
+            <h3 style="font-size:1.75rem; font-weight:900; color:var(--purple-dark); margin:10px 0;">
+              Evaluasi Akhir: Mengenal Pola
+            </h3>
+            <p style="font-weight:700; color:var(--text-muted); margin-bottom:18px;">
+              Terdapat 10 soal pilihan ganda. Setiap jawaban benar bernilai 10 poin (Nilai Maksimal 100). Setelah selesai, kamu akan mendapatkan <strong>Sertifikat Kelulusan</strong>!
+            </p>
+            <div style="text-align:left; max-width:420px; margin:0 auto 20px;">
+              <label style="font-weight:900;">Tuliskan Namamu untuk Sertifikat:</label>
+              <input type="text" id="evalStudentName" class="input-field" value="${appState.studentName}" placeholder="Contoh: Ahmad Zaki" onchange="syncStudentName(this.value)" />
+            </div>
+            <button class="btn btn-green btn-lg" onclick="startEvaluasi()">🚀 Mulai Kerjakan Evaluasi</button>
+          </div>
+        `;
+        return;
+      }
+
+      if (ev.submitted) {
+        renderEvaluasiResult();
+        return;
+      }
+
+      const qIdx = ev.currentQ;
+      const qData = EVAL_QUESTIONS[qIdx];
+      const letters = ['A', 'B', 'C', 'D'];
+
+      ws.innerHTML = `
+        <div class="card-box">
+          <div class="eval-nav-dots">
+            ${EVAL_QUESTIONS.map((_, i) => `
+              <button class="eval-dot ${i === qIdx ? 'active' : ''} ${ev.answers[i] !== null ? 'answered' : ''}"
+                      onclick="appState.eval.currentQ=${i}; renderEvaluasi();">
+                ${i + 1}
+              </button>
+            `).join('')}
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <span style="background:var(--purple-light); color:var(--purple-dark); padding:6px 14px; border-radius:999px; font-weight:900;">
+              Soal Nomor ${qIdx + 1} dari 10
+            </span>
+            <span style="font-weight:800; color:var(--text-muted);">
+              Terjawab: ${ev.answers.filter(a => a !== null).length} / 10
+            </span>
+          </div>
+
+          <p style="font-size:1.25rem; font-weight:800; margin-bottom:14px;">${qData.q}</p>
+
+          <div class="pattern-strip" style="padding:12px;">
+            ${qData.seq.map(k => renderPatternCard(k)).join('')}
+            <div class="pattern-slot" style="width:82px; height:94px;">?</div>
+          </div>
+
+          <div style="margin-top:18px;">
+            ${qData.options.map((optText, optIdx) => `
+              <button class="eval-option-card ${ev.answers[qIdx] === optIdx ? 'selected' : ''}"
+                      onclick="selectEvalOption(${optIdx})">
+                <span class="opt-letter">${letters[optIdx]}</span>
+                <span>${optText}</span>
+              </button>
+            `).join('')}
+          </div>
+
+          <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-top:20px;">
+            <button class="btn btn-white" ${qIdx === 0 ? 'disabled style="opacity:0.5;"' : `onclick="appState.eval.currentQ--; renderEvaluasi();"`}>
+              ⬅️ Sebelumnya
+            </button>
+            ${qIdx < 9
+              ? `<button class="btn btn-sky" onclick="appState.eval.currentQ++; renderEvaluasi();">Selanjutnya ➡️</button>`
+              : `<button class="btn btn-green btn-lg" onclick="finishEvaluasi()">🏁 Selesai & Lihat Nilai</button>`
+            }
+          </div>
+        </div>
+      `;
+    }
+
+    function selectEvalOption(optIdx) {
+      appState.eval.answers[appState.eval.currentQ] = optIdx;
+      playTone(540, 0.1, 'sine');
+      renderEvaluasi();
+    }
+
+    function startEvaluasi() {
+      const nameInput = document.getElementById('evalStudentName');
+      if (nameInput && nameInput.value.trim()) {
+        appState.studentName = nameInput.value.trim();
+      }
+      if (!appState.studentName) {
+        appState.studentName = "Peserta Didik Hebat Kelas 2";
+      }
+      appState.eval.started = true;
+      appState.eval.currentQ = 0;
+      appState.eval.answers = Array(10).fill(null);
+      appState.eval.submitted = false;
+      renderEvaluasi();
+    }
+
+    function finishEvaluasi() {
+      appState.eval.submitted = true;
+      markMenuDone('evaluasi');
+      playVictorySound();
+      spawnConfetti();
+      renderEvaluasiResult();
+    }
+
+    function renderEvaluasiResult() {
+      const ev = appState.eval;
+      let correctCount = 0;
+      EVAL_QUESTIONS.forEach((q, i) => {
+        if (ev.answers[i] === q.answer) correctCount++;
+      });
+
+      const score = correctCount * 10;
+      addReward(score, correctCount >= 7 ? 3 : 1);
+
+      let category = "";
+      let badgeColor = "";
+      let motivation = "";
+
+      if (score >= 90) {
+        category = "Sangat Baik";
+        badgeColor = "#16A34A";
+        motivation = "Luar biasa! Kamu sudah sangat mahir mengenal pola gambar, warna, suara, dan gerak. Pertahankan prestasimu!";
+      } else if (score >= 80) {
+        category = "Baik";
+        badgeColor = "#0284C7";
+        motivation = "Hebat sekali! Pemahamanmu tentang pola sudah baik. Terus berlatih agar semakin sempurna!";
+      } else if (score >= 70) {
+        category = "Cukup";
+        badgeColor = "#D97706";
+        motivation = "Bagus! Kamu sudah memahami dasar pola. Ayo ulangi bagian materi dan simulasi agar nilaimu semakin tinggi!";
+      } else {
+        category = "Perlu Bimbingan";
+        badgeColor = "#DC2626";
+        motivation = "Jangan menyerah! Ayo belajar kembali bersama Ibu Guru di menu Materi dan Simulasi, lalu coba evaluasi lagi ya!";
+      }
+
+      speakText(`Selamat ${appState.studentName}! Nilai evaluasi akhirmu adalah ${score}, dengan predikat ${category}.`);
+
+      const todayStr = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+      const letters = ['A', 'B', 'C', 'D'];
+
+      document.getElementById('evaluasiWorkspace').innerHTML = `
+        <div class="card-box no-print" style="text-align:center; border-color:${badgeColor};">
+          <h3 style="font-size:1.7rem; font-weight:900; margin-bottom:8px;">Hasil Evaluasi Akhir</h3>
+          <div style="font-size:4rem; font-weight:900; color:${badgeColor}; line-height:1.1; margin:10px 0;">
+            ${score}
+          </div>
+          <span style="display:inline-block; background:${badgeColor}; color:#FFF; padding:8px 22px; border-radius:999px; font-size:1.2rem; font-weight:900; margin-bottom:14px;">
+            Kategori: ${category}
+          </span>
+          <p style="font-size:1.12rem; font-weight:700; max-width:640px; margin:0 auto 20px;">
+            “${motivation}”
+          </p>
+          <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:12px;">
+            <button class="btn btn-orange" onclick="resetEvaluasi()">🔄 Ulangi Evaluasi</button>
+            <button class="btn btn-purple" onclick="window.print()">🖨️ Cetak Sertifikat</button>
+          </div>
+        </div>
+
+        <!-- SERTIFIKAT PENGHARGAAN -->
+        <div class="certificate-frame">
+          <div style="font-size:2.6rem;">🏆🌟🏆</div>
+          <h2 style="font-size:1.95rem; font-weight:900; color:#92400E; letter-spacing:1px; margin:6px 0;">
+            SERTIFIKAT PENGHARGAAN
+          </h2>
+          <p style="font-weight:800; color:#78350F; margin-bottom:14px;">
+            Diberikan kepada:
+          </p>
+          <div style="font-size:2.1rem; font-weight:900; color:#0369A1; border-bottom:3px dashed #D97706; display:inline-block; padding:4px 28px; margin-bottom:14px;">
+            ${appState.studentName}
+          </div>
+          <p style="font-size:1.1rem; font-weight:700; color:#1E293B; max-width:650px; margin:0 auto 14px;">
+            Telah menyelesaikan pembelajaran interaktif Matematika Kelas 2 SD Fase A<br/>
+            <strong>“PETUALANGAN POLA CERIA”</strong><br/>
+            dengan Nilai <strong>${score}</strong> (Predikat: <strong>${category}</strong>).
+          </p>
+          <div style="margin-top:24px; display:flex; justify-content:space-around; flex-wrap:wrap; gap:20px; font-weight:800; color:#334155;">
+            <div>
+              <p>Tanggal: ${todayStr}</p>
+              <p>SD Negeri 3 Kelaten</p>
+            </div>
+            <div>
+              <p>Guru Kelas / Pengembang Media</p>
+              <p style="margin-top:28px; text-decoration:underline; color:#0F172A;">Yuyun Apriyanti, S.Pd.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- PEMBAHASAN JAWABAN -->
+        <div class="card-box no-print" style="margin-top:24px;">
+          <h3 style="font-size:1.45rem; font-weight:900; color:var(--sky-dark); margin-bottom:14px;">
+            📖 Pembahasan Jawaban Evaluasi
+          </h3>
+          ${EVAL_QUESTIONS.map((q, i) => {
+            const userAns = ev.answers[i];
+            const isCorrect = userAns === q.answer;
+            return `
+              <div style="border:3px solid ${isCorrect ? '#4ADE80' : '#F87171'}; background:${isCorrect ? '#F0FDF4' : '#FEF2F2'}; border-radius:16px; padding:14px 18px; margin-bottom:12px;">
+                <p style="font-weight:900; margin-bottom:6px;">
+                  ${isCorrect ? '✅' : '❌'} Soal ${i + 1}: ${q.q}
+                </p>
+                <p style="font-weight:700; font-size:0.98rem;">
+                  Jawabanmu: <strong>${userAns !== null ? letters[userAns] + '. ' + q.options[userAns] : 'Tidak dijawab'}</strong> |
+                  Kunci Jawaban: <strong style="color:#166534;">${letters[q.answer]}. ${q.options[q.answer]}</strong>
+                </p>
+                <p style="font-size:0.95rem; color:#334155; margin-top:4px;">💡 <em>Pembahasan:</em> ${q.explanation}</p>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+
+    function resetEvaluasi() {
+      appState.eval = {
+        started: false,
+        currentQ: 0,
+        answers: Array(10).fill(null),
+        submitted: false
+      };
+      renderEvaluasi();
+    }
+
+    /* =====================================================================
+       K. INISIALISASI SAAT HALAMAN DIMUAT
+    ===================================================================== */
+    window.addEventListener('DOMContentLoaded', () => {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.getVoices();
+      }
+      renderMateri();
+    });
+  </script>
+</body>
+</html>
